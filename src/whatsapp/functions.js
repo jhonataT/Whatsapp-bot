@@ -1,19 +1,5 @@
-const banco = require("./banco");
 
 const functions = {
-    registerUser: (members, i = 0) => {
-        // Cadastrar todos os membros do grupo.
-        while(i < members.length){
-            if(banco[members[i]._serialized]) return ;
-            else{
-                banco[members[i]._serialized] = {
-                    name: undefined,
-                    all: true,
-                }
-            }
-            ++i;
-        }
-    },
     serverStatus: (action = false, stage = 0) => {
         
         if(stage === 0) {
