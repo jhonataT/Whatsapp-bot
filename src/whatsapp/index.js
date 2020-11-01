@@ -1,9 +1,10 @@
 const venom = require("venom-bot");
 
 const functions = require("./functions");
-const banco = require("./banco");
+const check = require("./database/datas");
 const filt = require("./filters");
 const voting = require("./voting");
+const register = require("./database/register");
 
 venom
   .create()
@@ -14,15 +15,19 @@ venom
 
 async function start(client) {
   const isMe = await client.getHostDevice();
-  console.log(isMe);
+  // console.log(isMe);
+
   client.onMessage(async (message) => {
-    if (message.isMedia === false) {
+    if (message.isMedia === false &&  message.isGroupMsg === true) {
       msg = message.body.toLowerCase();
+
       // register members group:
-      const members = await client.getGroupMembersIds(message.from);
-      const register = functions.registerUser(members);
-      
-      banco[message.author].name = message.sender.pushname;
+      if(msg.indexOf("!register") != -1){
+        console.log("\n\n!register\n\n");
+
+        check(message.from, message.sender.pushname, 1);
+
+       }
 
       // first, filter function:
 
@@ -50,4 +55,3 @@ async function start(client) {
     }
   });
 }
-
