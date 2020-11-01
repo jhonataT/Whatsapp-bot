@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "instagram-web-api": "^2.2.2",
+    "sqlite-async": "^1.1.0",
     "venom-bot": "^2.0.18"
   }
 }
