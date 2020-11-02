@@ -5,9 +5,10 @@ function execute(db){
     return db.exec(`
         CREATE TABLE IF NOT EXISTS usering (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
+            groupId TEXT,
             number TEXT,
             name TEXT,
-            all_permictions TEXT
+            all_permictions INTEGER
         );
     `)
 }
