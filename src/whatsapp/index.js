@@ -18,14 +18,14 @@ async function start(client) {
   // console.log(isMe);
 
   client.onMessage(async (message) => {
-    if (message.isMedia === false &&  message.isGroupMsg === true) {
+    if (message.isMedia === false && message.isGroupMsg === true) {
       msg = message.body.toLowerCase();
 
       // register members group:
       if(msg.indexOf("!register") != -1){
         console.log("\n\n!register\n\n");
-
-        check(message.from, message.sender.pushname, 1);
+        console.log(message);
+        check(message.from, message.author, message.sender.pushname, 1);
 
        }
 
@@ -38,12 +38,7 @@ async function start(client) {
       
       if(msg.indexOf("!all") != -1){
         console.log("ALL: \n");
-        for(let i = 0; i < members.length; i++){
-          let mentioned = functions.all(members, message.from, i);
-          if(mentioned != isMe.wid.user && mentioned != undefined){ // Se for diferente do bot, @menciona.
-            client.sendMentioned(message.from, `@${mentioned}`, [mentioned]);            
-          }
-        }
+        
       }
      
       
