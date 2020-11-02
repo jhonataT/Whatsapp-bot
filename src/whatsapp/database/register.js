@@ -1,16 +1,18 @@
 const Database = require("./db.js");
 
-const register = (numberMember, nameMember, all_perm = 1) => {
+const register = (groupMember, numberMember, nameMember, all_perm = 1) => {
     console.log("\n\nRegistering\n\n");
     Database
         .then( async (db) => {
             // inserir dados na tabela:
             await db.run(`
                 INSERT INTO usering (
-                number,
-                name,
-                all_permictions
+                    groupId,
+                    number,
+                    name,
+                    all_permictions
                 ) VALUES (
+                    "${groupMember}",
                     "${numberMember}",
                     "${nameMember}",
                     "${all_perm}"
