@@ -13,7 +13,7 @@ function check(from, number, name, all_permictions){
     // Consultar dados na tabela:
 
     Database
-        .then( async (db, i = 0) => {
+        .then( async (db) => {
             tableUsers =  await db.all("SELECT * FROM usering");
             console.log(tableUsers.length)
         })
