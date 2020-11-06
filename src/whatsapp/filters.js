@@ -1,5 +1,5 @@
 
-const wordList = ["bct","pqp", "porra", "puta", "merda", "tnc", "cu", "fdp"];
+const wordList = ["bct","pqp", "porra", "puta", "merda", "tnc", "cu", "fdp", "fdc", "carai", "krl", "caralho"];
 const phraseList = [
     "olha o palavrão, mizera",
     "tu fala assim com a tua mãe?",
@@ -11,7 +11,14 @@ const phraseList = [
     "tudo na vida depende do quanto você quer comer alguém.\n",
     "nobre é o guerreiro que suja sua espada de sangue.\n",
     "quanto mais tempo você ficar solteiro, mais pirocada sua futura mulher vai levar.\n",
-    "em briga de saci qualquer chute é uma voadora.\n"
+    "em briga de saci qualquer chute é uma voadora.\n",
+    "Esquecemos dos gafanhotos e do Ronaldinho.",
+    "transar é arte, gozar faz parte, engravidar é moda. Mas assumir é foda.",
+    "Mais vale dois pintos na mão do que um na bunda.",
+    "depois da tempestade, vem a gripe.",
+    "se a vida fosse fácil, bebê não nascia chorando.",
+    "vou nem dizer nada.",
+    "vai assistir uma live."
 ];
 
 const filt = (msg, name) => {
