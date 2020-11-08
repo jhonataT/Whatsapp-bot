@@ -8,6 +8,8 @@ function execute(db){
             groupId TEXT,
             number TEXT,
             name TEXT,
+            voted INTEGER,
+            votedIn TEXT,
             all_permictions INTEGER
         );
     `)
