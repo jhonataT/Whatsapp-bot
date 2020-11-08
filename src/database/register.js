@@ -10,11 +10,15 @@ const register = (groupMember, numberMember, nameMember, all_perm = 1) => {
                     groupId,
                     number,
                     name,
+                    voted, 
+                    votedIn,
                     all_permictions
                 ) VALUES (
                     "${groupMember}",
                     "${numberMember}",
                     "${nameMember}",
+                    0,
+                    "0",
                     "${all_perm}"
                     );
             `)
