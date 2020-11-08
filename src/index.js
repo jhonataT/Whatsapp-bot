@@ -8,9 +8,12 @@ const check = require("./database/datas");
 const filt = require("./filters");
 const voting = require("./voting");
 const register = require("./database/register");
+const registerVoting = require("./registerVoting");
 
 const mentionedAll = {numbers: undefined};
 const server = {status: false};
+let status_voting = false;
+let tableUsers;
 
 venom
   .create()
@@ -28,6 +31,7 @@ async function start(client) {
 
   client.onMessage(async (message) => {
     if (message.isMedia === false && message.isGroupMsg === true) {
+      if(status_voting === false) clearVotes(); // limpar os votos do banco de dados;
       
       msg = message.body.toLowerCase();
 
@@ -43,8 +47,8 @@ async function start(client) {
         console.log("!register + verify " + verify);
             if(verify === 0){
               console.log("\n\n!register\n\n");
-              console.log(message);
-              check(message.from, message.author, message.sender.pushname, 1);
+              check(message.from, message.author, message.sender.pushname, 1)
+              client.sendText(message.from, `*~${message.sender.pushname}~*, *~VOCÊ FOI REGISTRADO~*`)
           } 
       }
 
@@ -55,7 +59,6 @@ async function start(client) {
         const verify = handling(msg, "!all", msg.indexOf("!all"));
         console.log("verify = " + verify)
         if(verify === 0){
-          let tableUsers;
           Database.then( async (db) => {
             tableUsers =  await db.all("SELECT * FROM usering");
             console.log(tableUsers.length);
@@ -120,54 +123,60 @@ async function start(client) {
           else client.sendText(message.from, `\n🟢 _*O SERVER TÁ ~ON~*_ 🟢\n`);
         }
       }
-    } 
-    // Image to sticker (group and private)
-    else if(message.isMedia === true && message.type === 'image') {
-      
-      msg = message.caption.toLowerCase();
 
-      if(msg.indexOf('!sticker') != -1){
-        const buffer = await client.decryptFile(message);
-        // At this point you can do whatever you want with the buffer
-        // Most likely you want to write it into a file
-        const fileName = `img.${mime.extension(message.mimetype)}`;
-        const response = {};
-        await fs.writeFile(fileName, buffer, async (err) => {
-          if (err){
-            console.log("err :"+err);
-          } 
-          else {
-            console.log('Saved!');
-            fileSavedFlag = true;
-            response.result = fileSavedFlag;
-            console.log(response);
-            // resolve(response)
-            console.log("vem")
-            
-            // try {
-            //   fs.unlinkSync(`img.${mime.extension(message.mimetype)}`)
-            //   //file removed
-            // } catch(err) {
-            //   console.error("erro = " + err);
-            // }
-            console.log("apaga")
-            await client
-              .sendImageAsSticker(message.from, `img.jpeg`)
-              .then((result) => {
-                console.log('Result: ', result); //return object success
-              })
-              .catch((erro) => {
-                console.error('Error when sending: ', erro); //return object error
-              });
-              console.log("send sticker")
-            
-          }
-        });
+      // Initing voting function:
+
+      else if(msg.indexOf("!voting") != -1){
+        const verify = handling(msg, "!voting", msg.indexOf("!voting"));
+        console.log("verify = " + verify)
+        console.log("status.voting = " + status_voting)
+        if(verify === 0 && status_voting === false){
+          const vote = voting(msg, msg.indexOf("!voting") + 8)
+          console.log(vote)
+          if(vote != undefined){
+            status_voting = true;
+            let options = " "
+            options = options.concat("```VOTAÇÃO:```\n", `\n *tema:* `, vote.theme, `\n\n_opções para votar:_ `);
+
+            for(let i = 0; i < vote.options.length; i++){
+              options = options.concat("  \n\n", vote.options[i], ` (${i + 1})`); 
+            }
+
+            client.sendText(message.from, options);
+          } else console.log("\n\nthere is already a vote\n\n");
+        } else if(verify === 0 && status_voting === true) client.sendText(message.from, `_*~HÁ UMA VOTAÇÃO EM ANDAMENTO.~*_`)
       }
-    }
+
+      // voting function:
+
+      else if(msg.indexOf("!vote") != -1){
+        const verify = handling(msg, "!vote", msg.indexOf("!vote"));
+        console.log("verify = " + verify);
+        if(verify === 0 &&  status_voting === true){
+          Database
+          .then( async (db) => {
+            tableUsers =  await db.all("SELECT * FROM usering");
+            for(let i = 0; i < tableUsers.length; i++){
+              if(tableUsers[i].number === message.author && tableUsers[i].groupId === message.from){
+                if(tableUsers[i].voted === 1){
+                  client.sendText(message.from, `*_${message.sender.pushname}, VOCÊ JÁ VOTOU!!_*`);
+                  break;
+                } else {
+                  console.log("teste " + tableUsers[i].voted);
+                  const newMsg = msg.replace("!vote", "");
+                  const contVote = registerVoting(newMsg, message.author, message.from);
+                  client.sendText(message.from, `*_${message.sender.pushname}, OBRIGADO POR VOTAR!_*`);
+                  break;
+                }
+              }
+            }
+          });
+        }
+      }
+    } 
+    // Image to sticker (group and private):
   });
 }
-
 
 function handling(msg, command, value) {
  
@@ -179,7 +188,19 @@ function handling(msg, command, value) {
   return 1;
 }
 
-
-
-
-module.exports = mentionedAll;
+function clearVotes(){
+  Database
+  .then( async (db) => {
+    tableUsers =  await db.all("SELECT * FROM usering");
+    console.log("system 'clearVotes'");
+    for(let i = 0; i < tableUsers.length; i++){
+      if(tableUsers[i].voted != 0){
+        await db.run(
+          `UPDATE usering
+          SET voted = 0
+          WHERE id = ${tableUsers[i].id}`
+        );
+      }
+    }
+  });
+}
