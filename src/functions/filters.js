@@ -1,13 +1,6 @@
 
 const wordList = ["bct","pqp", "porra", "puta", "merda", "tnc", "cu", "fdp", "fdc", "carai", "krl", "caralho"];
 const phraseList = [
-    "olha o palavrão, mizera",
-    "tu fala assim com a tua mãe?",
-    "estamos em um grupo de família kkkkkkk",
-    "vocabulário de baixo nível esse",
-    "só fala palavrão, tomar no teu cu vai",
-    "ai não irmão!",
-    "boca suja!",
     "tudo na vida depende do quanto você quer comer alguém.\n",
     "nobre é o guerreiro que suja sua espada de sangue.\n",
     "quanto mais tempo você ficar solteiro, mais pirocada sua futura mulher vai levar.\n",
@@ -18,7 +11,20 @@ const phraseList = [
     "depois da tempestade, vem a gripe.",
     "se a vida fosse fácil, bebê não nascia chorando.",
     "vou nem dizer nada.",
-    "vai assistir uma live."
+    "vai assistir uma live.",
+    "teu cu é o aeroporto meu pau é o avião",
+    "teu cu é a garagem meu pau é o caminhão",
+    "teu cu é a carminha meu pau é o tufão",
+    "teu cu é o mar meu pau é o tubarão",
+    "teu cu é o morro meu pau é o complexo do alemão... caralho sem nexo",
+    "teu cu é o cabelo meu pau é o reflexo",
+    "olha o palavrão, mizera",
+    "tu fala assim com a tua mãe?",
+    "estamos em um grupo de família kkkkkkk",
+    "vocabulário de baixo nível esse",
+    "só fala palavrão, tomar no teu cu vai",
+    "ai não irmão!",
+    "boca suja!"
 ];
 
 const filt = (msg, name) => {
