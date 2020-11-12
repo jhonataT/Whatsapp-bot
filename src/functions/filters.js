@@ -27,29 +27,37 @@ const phraseList = [
     "boca suja!"
 ];
 
+
 const filt = (msg, name) => {
 
-    let i = 0;
-    while(i < wordList.length){ 
-        let value = msg.indexOf(wordList[i]);
-        let leng = wordList[i].length;
-        if(value != -1){
-            if(msg[value - 1] === ' ' || msg[leng] === ' '){
-                return `${name}, ${phraseList[getRandomInt(0, phraseList.length)]}`;
-            } else if(msg.length === wordList[i].length) return `${name}, ${phraseList[getRandomInt(0, phraseList.length)]}`;
-             
-        } 
+  let i = 0;
+  while(i < wordList.length){ 
+      let value = msg.indexOf(wordList[i]);
+      let leng = wordList[i].length;
+      if(value != -1){
+          if(msg[value - 1] === ' '){
+            if(msg[leng + value] === ' ' || msg[leng + value] === undefined){
+              return `${name}, ${phraseList[getRandomInt(0, phraseList.length)]}`;
+            }
+          } 
+          else if(msg[leng + value] === ' '){
+            if(msg[value - 1] === ' ' || msg[value - 1] === undefined){
+              return `${name}, ${phraseList[getRandomInt(0, phraseList.length)]}`;
+            }
+          }
+          else if(msg.length === wordList[i].length) return `${name}, ${phraseList[getRandomInt(0, phraseList.length)]}`;
+      } 
 
-        ++i;
-    }
-    return null;
+      ++i;
+  }
+  return null;
 
 }
 
 function getRandomInt(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min)) + min;
-  }
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min)) + min;
+}
 
 module.exports = filt;
