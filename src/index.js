@@ -1,4 +1,5 @@
 const venom = require("venom-bot");
+const { HLTV } = require('hltv')
 const fs = require('fs');
 const mime = require('mime-types');
 
@@ -77,6 +78,40 @@ async function start(client) {
           await client.sendText(message.from, help);
         }
        }
+
+       // Show CS:GO camp:
+      else if(msg.indexOf("!team") != -1){
+        let verify = handling(msg, "!team", msg.indexOf("!team"));
+        console.log("verify = " + verify)
+        if(verify === 0){
+          let teamName = msg.substring(msg.indexOf("!team") + 6);
+          console.log("TeamName = " + teamName);
+
+
+          let sts = HLTV.getResults({startPage:0,endPage:1}).then((res) => {
+            for(let i = 0; i < res.length; i++){
+              if(res[i].team1.name.toLowerCase() === teamName || res[i].team2.name.toLowerCase() === teamName){
+                  console.log(res[i].team1.name + " " + res[i].team2.name);
+                  return res[i];
+                  break;
+              }
+            }
+          }).then( (sts) => {
+            console.log(sts);
+            if(sts != undefined){
+              client.sendText(message.from, 
+              `
+              *SOBRE O ÚLTIMO JOGO DO TIME ${teamName}:*
+              
+              _TIMES: ${sts.team1.name} x ${sts.team2.name}_
+              _PLACAR: ${sts.result}_ 
+
+              _TORNEIO: ${sts.event.name}_
+              `);
+            } else client.sendText(message.from, "_*~NÃO HÁ JOGO RECENTE DESTE TIME.~*_")
+          });
+        }
+      }
     } 
     // Image to sticker (group and private):
   });
