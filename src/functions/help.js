@@ -15,21 +15,15 @@ const help =
         _*do grupo (devem* *estar*_ 
                      _*cadastrados);*_
         
-    _*~!voting~ tema #opção_1 #opção_2*_
 
-    _*Iniciar uma votação:*_
-    
-    _*( O sistema de votação é simples,*_
-    _*você só precisa irformar o*_
-    _*comando ( !voting ),*_
-    _*seguido do tema da votação e das*_ 
-    _*opções que podem ser votadas)*_
+        *(FUNÇÕES ESPECÍFICAS DO GAME CSGO):*
 
-    _*Votar em uma opção:*_
-    _*para votar, basta informar*_
-    _*o comando: ~!vote~ n, onde "n"*_
-    _*é o número da opção.*_
-
+        _*~!team~ <name> -> mostra o*_
+        _*resultado do ultimo*_
+        _*jogo do time <name>*_ 
+        
+        *EXEMPLO:*
+            *!team MiBR*
 
     `
 
