@@ -1,17 +1,18 @@
 {
   "name": "Wbot2.0",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "",
   "main": "index.js",
+  "dependencies": {
+    "hltv": "^2.21.1",
+    "sqlite-async": "^1.1.0",
+    "venom-bot": "^2.0.18"
+  },
+  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "instagram-web-api": "^2.2.2",
-    "sqlite-async": "^1.1.0",
-    "venom-bot": "^2.0.18"
-  }
+  "license": "ISC"
 }
