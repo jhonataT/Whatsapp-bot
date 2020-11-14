@@ -25,7 +25,10 @@ const help =
         *EXEMPLO:*
             *!team MiBR*
 
-    `
+        _*~!live~ -> mostra os*_
+        _*jogos que estão*_
+        _*acontecendo no momento*_ 
 
+    `
 
 module.exports = help;
