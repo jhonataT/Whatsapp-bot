@@ -10,7 +10,6 @@ const all = require("./functions/all");
 const filt = require("./functions/filters");
 const register = require("./database/register");
 
-const mentionedAll = {numbers: undefined};
 let tableUsers;
 
 venom
@@ -87,7 +86,6 @@ async function start(client) {
           let teamName = msg.substring(msg.indexOf("!team") + 6);
           console.log("TeamName = " + teamName);
 
-
           let sts = HLTV.getResults({startPage:0,endPage:1}).then((res) => {
             for(let i = 0; i < res.length; i++){
               if(res[i].team1.name.toLowerCase() === teamName || res[i].team2.name.toLowerCase() === teamName){
@@ -97,20 +95,46 @@ async function start(client) {
               }
             }
           }).then( (sts) => {
-            console.log(sts);
-            if(sts != undefined){
-              client.sendText(message.from, 
-              `
-              *SOBRE O ÚLTIMO JOGO DO TIME ${teamName}:*
-              
-              _TIMES: ${sts.team1.name} x ${sts.team2.name}_
-              _PLACAR: ${sts.result}_ 
-
-              _TORNEIO: ${sts.event.name}_
-              `);
-            } else client.sendText(message.from, "_*~NÃO HÁ JOGO RECENTE DESTE TIME.~*_")
+            let moreInfos = HLTV.getMatch({id: sts.id}).then( (res) => {
+              console.log("More infos");
+              return res;
+            }).then( (moreInfos) => {
+              console.log(sts);
+              if(sts != undefined){
+                let printInfos = infoCsgoTeams(teamName, sts, moreInfos);
+                client.sendText(message.from, printInfos);
+              } else client.sendText(message.from, "_*~NÃO HÁ JOGO RECENTE DESTE TIME.~*_")
+            })
           });
         }
+      }
+
+      // show lives games:
+
+      else if(msg.indexOf("!live") != -1){
+        let verify = handling(msg, "!live", msg.indexOf("!live"));
+        console.log("verify = " + verify)
+        if(verify === 0){
+          HLTV.getMatches().then((res) => {
+            let livesInfos = "_*jogos acontecendo neste momento:*_\n";
+            
+            for(let i = 0; i < res.length; i++){
+                if(res[i].live === true){
+                  console.log("live");
+                  livesInfos = livesInfos.concat(`
+            *${res[i].team1.name} x ${res[i].team2.name}*\n`)
+                livesInfos = livesInfos.concat(`*evento:*\n`) 
+                livesInfos = livesInfos.concat(`_${res[i].event.name}_\n`);
+                livesInfos = livesInfos.concat(`*formato: ${res[i].format}*\n`);
+              }
+            }
+            if(livesInfos === "_*jogos acontecendo neste momento:*_\n") return `*~NÃO HÁ JOGOS ACONTECENDO NO MOMENTO~*`
+            else return livesInfos;
+          }).then( (livesInfos) =>{
+            client.sendText(message.from, livesInfos);
+          })
+        }
+
       }
     } 
     // Image to sticker (group and private):
@@ -125,4 +149,36 @@ function handling(msg, command, value) {
     else if(msg[value - 1] === undefined && msg[value + (command.length)] === ' ') return 0;
   } else if(msg.length === command.length) return 0;
   return 1;
+}
+
+function infoCsgoTeams(teamName, sts, moreInfos) {
+  let maps = "*Mapas e seus resultados:*\n";
+  for(let i = 0; i < moreInfos.maps.length; i++){
+    maps = maps.concat(`
+    *${moreInfos.maps[i].name},* 
+    *result: ${moreInfos.maps[i].result}*\n
+    `);
+  }
+  
+  return `
+*SOBRE O ÚLTIMO JOGO DO TIME ${teamName}:*
+              
+_TIMES:_
+_*${sts.team1.name} x ${sts.team2.name}*_
+
+_*Formato: ${moreInfos.format}*_
+  
+_PLACAR: ${sts.result}_ 
+
+${maps}
+
+_Player da partida:_
+*${moreInfos.highlightedPlayer.name}*
+
+_Um highlight:_
+${moreInfos.highlights[0].link}
+
+
+_TORNEIO: ${sts.event.name}_
+  `
 }
