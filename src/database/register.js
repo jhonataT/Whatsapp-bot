@@ -23,11 +23,6 @@ const register = (groupMember, numberMember, nameMember, all_perm = 1) => {
                     );
             `)
         });
-        Database
-        .then( async (db, i = 0) => {
-            tableUsers =  await db.all("SELECT * FROM usering");
-            console.log(tableUsers)
-        })
 }
 
 
