@@ -3,9 +3,12 @@ const venom = require("venom-bot");
 const help = require("./functions/help");
 const all = require("./functions/all");
 const filt = require("./functions/filters");
+const imgSticker = require("./functions/imgSticker");
+
 const hltv = require("./methods/hltv");
 const register = require("./database/register");
 const data = require("./methods/bd");
+
 const PREFIX = '.';
 
 
@@ -67,6 +70,16 @@ async function start(client) {
           client.sendText(message.from, lives);          
         }
       }
-    } 
+    }
+    else{
+      message.caption = message.caption.toLowerCase();
+        const [CMD_NAME, ...args] = message.caption
+        .trim()
+        .substring(PREFIX.length)
+        .split(/\s+/);
+      if(message.type === 'image' && CMD_NAME === "sticker"){
+        imgSticker(client, message);
+      }
+    }
   });
 }
