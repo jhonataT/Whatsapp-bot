@@ -9,7 +9,7 @@ const hltv = require("./methods/hltv");
 const register = require("./database/register");
 const data = require("./methods/bd");
 
-const PREFIX = '.';
+const PREFIX = '!';
 
 
 venom
@@ -23,13 +23,17 @@ async function start(client) {
   client.onMessage(async (message) => {
     await client.sendSeen(message.from);
     if (message.isMedia === false && message.isGroupMsg === true) {
+      let phrase = await filt(message.body, message.sender.pushname);
+      if (phrase) client.sendText(message.from, phrase);
+      message.body = message.body.toLowerCase();
+      if(message.body.indexOf("kkkk") != -1) client.sendText(message.from, "HUEHUEHUEUHEU");
       if(message.content.startsWith(PREFIX)){ // if the initial message has the PREFIX:
         const db = new data(message.from, message.author, message.sender.pushname, 1);
-        message.body = message.body.toLowerCase();
         const [CMD_NAME, ...args] = message.body
         .trim()
         .substring(PREFIX.length)
         .split(/\s+/);
+
 
         console.log(CMD_NAME);
         // Register: 
@@ -55,7 +59,7 @@ async function start(client) {
           await client.sendText(message.from, help);
         }
         // hltv: team stats.
-        else if(CMD_NAME === 'stats'){
+        else if(CMD_NAME === 'team'){
           let teamName = args.toString().replace(/,/gi, " ");
           console.log(teamName);
           const csgo = new hltv(teamName);
@@ -63,11 +67,17 @@ async function start(client) {
           client.sendText(message.from, stats);          
         }
         // hltv: matches live.
-        else if(CMD_NAME === 'lives'){
+        else if(CMD_NAME === 'live' && args.length === 0){
           console.log("A");
           const csgo = new hltv();
           const lives = await csgo.lives();
           client.sendText(message.from, lives);          
+        }
+
+        else if(CMD_NAME === 'live' && args.length != 0){
+          hltv.liveInfo(args.toString().replace(/,/gi, " "), client, message);
+
+
         }
       }
     }

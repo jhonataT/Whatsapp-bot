@@ -1,6 +1,6 @@
 const { HLTV } = require('hltv');
 
-class csgo {
+class Csgo {
     constructor(teamName){
         this.teamName = teamName;
     }
@@ -24,6 +24,7 @@ class csgo {
             
             for(let i = 0; i < res.length; i++){
                 if(res[i].live === true){
+                    console.log(res[i]);
                   livesInfos = livesInfos.concat(`
             *${res[i].team1.name} x ${res[i].team2.name}*\n`);
             
@@ -40,6 +41,53 @@ class csgo {
           return infos;
     }
 
+    static async liveInfo(teamName, client, message){
+        const infos = await HLTV.getMatches();
+        let live = false;
+        for(let i = 0; i < infos.length; i++){
+            if(infos[i].live === true){
+                if(infos[i].team1.name.toLocaleLowerCase() === teamName || infos[i].team2.name.toLocaleLowerCase() === teamName){
+                    live = true;
+                    const matchInfo = await HLTV.getMatch( {id: infos[i].id} );
+                    console.log(matchInfo);
+                    let hightLights;
+                    if(matchInfo.highlights.length === 0) hightLights = `*Ainda não temos um highlight pronto.*`
+                    else hightLights = matchInfo.highlights[0].link;
+                    client.sendText(message.from, `
+*SOBRE O JOGO DO/DA ${teamName}:*
+*status:* _${matchInfo.status}_
+
+    _*${matchInfo.team1.name} X ${matchInfo.team2.name}*_
+    
+*Formato:* _${matchInfo.format}._
+
+*Evento:*
+
+_${matchInfo.event.name}._
+
+*Mapas:*
+
+*${matchInfo.maps[0].name}:*
+*_${matchInfo.maps[0].result}_*
+
+*${matchInfo.maps[1].name}:*
+*_${matchInfo.maps[1].result}_*
+
+*${matchInfo.maps[2].name}:*
+*_${matchInfo.maps[2].result}_*
+
+
+*Highlight para você:*
+
+${hightLights}
+
+                    
+                    `);
+                }
+            }
+        }     
+        if(live === false) client.sendText(message.from, 'Desculpe, não encontrei um jogo ao vivo desse time.')
+    }
 }
 
 
@@ -76,4 +124,4 @@ async function infoCsgoTeams(teamName, sts) {
     `
   }
 
-module.exports = csgo;
+module.exports = Csgo;

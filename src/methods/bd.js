@@ -1,7 +1,7 @@
 const Database = require("../database/db.js");
 const DataRegister = require("../database/register.js");
 
-class data {
+class Data {
     constructor(groupId, memberId, memberName, allPermictions){
         this.groupId = groupId;
         this.memberId = memberId;
@@ -43,9 +43,7 @@ class data {
             return "user has been registered!";
         }
         else return "The user already exists";
-
     }
-
 } 
 
-module.exports = data;
+module.exports = Data;

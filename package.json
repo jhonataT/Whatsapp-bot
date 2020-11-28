@@ -1,16 +1,17 @@
 {
   "name": "Wbot2.0",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "",
   "main": "index.js",
   "dependencies": {
     "hltv": "^2.21.1",
     "sqlite-async": "^1.1.0",
-    "venom-bot": "^2.0.18"
+    "venom-bot": "^2.0.26"
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/index.js"
   },
   "keywords": [],
   "author": "",
