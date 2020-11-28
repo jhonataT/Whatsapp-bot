@@ -80,7 +80,6 @@ _${matchInfo.event.name}._
 *Highlight para você:*
 
 ${hightLights}
-
                     
                     `);
                 }
