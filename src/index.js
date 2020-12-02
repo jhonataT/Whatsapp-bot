@@ -11,7 +11,8 @@ venom
 .catch( (err) => console.log(err));
 
 const init = (client) => {
-  client.onMessage((message) => {
+  client.onMessage(async (message) => {
+    await client.sendSeen(message.from);
     if(message.isMedia === false && message.isGroupMsg === true)
       GroupsMessage(client, message);
     else
@@ -19,7 +20,7 @@ const init = (client) => {
   });
 } 
 
-const GroupsMessage = (client, message) => {
+const GroupsMessage = async (client, message) => {
   if(!message.body.startsWith(PREFIX)) return;
 
   const [CMD_NAME, ...args] = message.body
@@ -27,6 +28,8 @@ const GroupsMessage = (client, message) => {
   .trim()
   .substring(PREFIX.length)
   .split(/\s+/);
+
+  console.log(CMD_NAME);
 
   if(CMD_NAME === 'all')
     all.mention(client, message);
