@@ -49,6 +49,4 @@ const sendSticker = (client, message) => {
   if(message.type === 'image' && CMD_NAME === "sticker"){
     imgSticker(client, message);
   }
-
-
 };
