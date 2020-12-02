@@ -16,9 +16,6 @@ const init = (client) => {
       GroupsMessage(client, message);
     else
       sendSticker(client, message);
-
-    
-    
   });
 } 
 
