@@ -1,12 +1,11 @@
 {
   "name": "Wbot2.0",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "",
   "main": "index.js",
   "dependencies": {
     "hltv": "^2.21.1",
-    "sqlite-async": "^1.1.0",
-    "venom-bot": "^2.0.26"
+    "venom-bot": "^2.1.0"
   },
   "devDependencies": {},
   "scripts": {

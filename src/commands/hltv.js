@@ -1,30 +1,25 @@
 const { HLTV } = require('hltv');
 
 class Csgo {
-    constructor(teamName){
-        this.teamName = teamName;
-    }
-
-    async stats(){
+    static  async teamStats(client, message, teamName){
         let sts = await HLTV.getResults({startPage:0,endPage:1}).then((res) => {
             for(let i = 0; i < res.length; i++){
-                if(res[i].team1.name.toLowerCase() === this.teamName || res[i].team2.name.toLowerCase() === this.teamName){
+                if(res[i].team1.name.toLowerCase() === teamName || res[i].team2.name.toLowerCase() === teamName){
                     return res[i];
                     break;
                 }
             }
         });
-        if(sts) return infoCsgoTeams(this.teamName, sts);
-        else return "I haven't found a recent match for this team."
+        if(sts) infoCsgoTeams(teamName, sts, client, message);
+        else client.sendText(message.from, "I haven't found a recent match for this team.");
     }
 
-    async lives() {
+    static async live(client, message) {
         const infos = await HLTV.getMatches().then((res) => {
             let livesInfos = "_*jogos acontecendo neste momento:*_\n";
             
             for(let i = 0; i < res.length; i++){
                 if(res[i].live === true){
-                    console.log(res[i]);
                   livesInfos = livesInfos.concat(`
             *${res[i].team1.name} x ${res[i].team2.name}*\n`);
             
@@ -34,14 +29,13 @@ class Csgo {
               }
             }
             if(livesInfos === "_*jogos acontecendo neste momento:*_\n") 
-                return `*~NÃO HÁ JOGOS ACONTECENDO NO MOMENTO~*`
+                client.sendText(message.from, `*~NÃO HÁ JOGOS ACONTECENDO NO MOMENTO~*`);
             else 
-                return livesInfos;
+                client.sendText(message.from, livesInfos);
           });
-          return infos;
     }
 
-    static async liveInfo(teamName, client, message){
+    static async liveInfo(client, message, teamName){
         const infos = await HLTV.getMatches();
         let live = false;
         for(let i = 0; i < infos.length; i++){
@@ -90,7 +84,7 @@ ${hightLights}
 }
 
 
-async function infoCsgoTeams(teamName, sts) {
+async function infoCsgoTeams(teamName, sts, client, message) {
     const moreInfos = await HLTV.getMatch({id: sts.id});
     let maps = "*Mapas e seus resultados:*\n";
     for(let i = 0; i < moreInfos.maps.length; i++){
@@ -100,7 +94,7 @@ async function infoCsgoTeams(teamName, sts) {
       `);
     }
     
-    return `
+    client.sendText(message.from,`
   *SOBRE O ÚLTIMO JOGO DO TIME ${teamName}:*
                 
   _TIMES:_
@@ -115,12 +109,10 @@ async function infoCsgoTeams(teamName, sts) {
   _Player da partida:_
   *${moreInfos.highlightedPlayer.name}*
   
-  _Um highlight:_
-  ${moreInfos.highlights[0].link}
-  
   
   _TORNEIO: ${sts.event.name}_
-    `
+
+    `);
   }
 
 module.exports = Csgo;
