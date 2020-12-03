@@ -44,6 +44,7 @@ const GroupsMessage = async (client, message) => {
 };
 
 const sendSticker = (client, message) => {
+  if(!message.caption) message.caption = 'message'; 
   const [CMD_NAME, ...args] = message.caption
   .toLowerCase()
   .trim()
