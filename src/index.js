@@ -15,32 +15,31 @@ const init = (client) => {
     await client.sendSeen(message.from);
     if(message.isMedia === false && message.isGroupMsg === true)
       GroupsMessage(client, message);
-    else
+    else if(message.isMedia === true)
       sendSticker(client, message);
   });
 } 
 
 const GroupsMessage = async (client, message) => {
   if(!message.body.startsWith(PREFIX)) return;
-
+  
   const [CMD_NAME, ...args] = message.body
   .toLowerCase()
   .trim()
   .substring(PREFIX.length)
   .split(/\s+/);
-
+  
   console.log(CMD_NAME);
 
-  if(CMD_NAME === 'all')
+
+  if(CMD_NAME === 'all' || CMD_NAME === 'a')
     all.mention(client, message);
-  if(CMD_NAME === 'help')
+  if(CMD_NAME === 'help' || CMD_NAME === 'h')
     all.help(client, message);
-  if(CMD_NAME === 'live' && args.length === 0)
+  if(CMD_NAME === 'live' && args.length === 0 || CMD_NAME === 'l' && args.length === 0)
     hltv.live(client, message);
-  if(CMD_NAME === 'live' && args.length != 0)
+  if(CMD_NAME === 'team' && args.length != 0 || CMD_NAME === 't' && args.length != 0)
     hltv.liveInfo(client, message, args.toString().replace(/,/gi, " "));
-  if(CMD_NAME === 'team')
-    hltv.teamStats(client, message, args.toString().replace(/,/gi, " "));
 };
 
 const sendSticker = (client, message) => {
@@ -50,7 +49,9 @@ const sendSticker = (client, message) => {
   .trim()
   .substring(PREFIX.length)
   .split(/\s+/);
-  if(message.type === 'image' && CMD_NAME === "sticker"){
-    imgSticker(client, message);
+  if(message.type === 'image'){
+    if(CMD_NAME === "sticker" || CMD_NAME === "s")
+      imgSticker(client, message);
   }
 };
+
