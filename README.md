@@ -20,18 +20,18 @@
 
 # Functions:
 
-- **!register:**
+- **!STICKER**
 
-***register to be able to use specific functions*
-(*only needs to be done once per membe*r).**
+***Convert image to sticker***
 
-![!register](https://user-images.githubusercontent.com/51134324/99526827-9bb4d300-297a-11eb-8218-cee3e38ccdfb.jpeg)
+![sticker_command](https://user-images.githubusercontent.com/51134324/101259563-3c8be800-3708-11eb-968d-0a17fd030480.PNG)
+
 
 - **!ALL**
 
 ***Mark all registered members of a group.***
 
-![!all](https://user-images.githubusercontent.com/51134324/99526907-b7b87480-297a-11eb-8b66-d99ad989ebe0.jpeg)
+![all_command](https://user-images.githubusercontent.com/51134324/101259522-e74fd680-3707-11eb-95b2-8956bb7bd5e6.PNG)
 
 
 - **!live**
@@ -40,7 +40,7 @@
 
 [***https://www.hltv.org/matches***](https://www.hltv.org/matches)
 
-![!live_1](https://user-images.githubusercontent.com/51134324/99527110-06660e80-297b-11eb-82c5-7cc5cf65e017.jpeg)
+![live_command](https://user-images.githubusercontent.com/51134324/101259534-f6368900-3707-11eb-85ce-2553132807fd.PNG)
 
 
 - **!team <name>**
@@ -49,15 +49,12 @@
 
 [***https://www.hltv.org/results***](https://www.hltv.org/results)
 
-![team_1](https://user-images.githubusercontent.com/51134324/99527186-2695cd80-297b-11eb-95d5-7ec92450a3fe.jpeg)
-![team_2](https://user-images.githubusercontent.com/51134324/99527202-30b7cc00-297b-11eb-8f38-7d5c8dc9a13e.jpeg)
+![team_command](https://user-images.githubusercontent.com/51134324/101259540-08182c00-3708-11eb-815d-50bb932d9760.PNG)
 
 
 - **!HELP**
 
     ***command list***
 
-![!help_1](https://user-images.githubusercontent.com/51134324/99527249-41684200-297b-11eb-923b-2071df4014e9.jpeg)
+![help_command](https://user-images.githubusercontent.com/51134324/101259546-16fede80-3708-11eb-927a-6e5cf648a1fd.PNG)
 
-
-![!help_2](https://user-images.githubusercontent.com/51134324/99527271-4b8a4080-297b-11eb-95bd-e6a123ca0acb.jpeg)
