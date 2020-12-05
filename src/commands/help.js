@@ -5,19 +5,26 @@ class Commands {
 }
 
 function helpList(){
-return `
-*Command list:*
+    return `
+🔰 -----[ *MENU BOTLICO* ]----- 🔰
 
-_To mention all members, use:_
-    *!all*
-_To get the list of commands, use:_
-    *!help*
-_To convert an image into a sticker:_
-    _I. Send an image;_
-    _II. In the text of the image, write *!sticker*;_
-    _III. Ready, you have a new sticker._
-`;
+    ♻️ INFO BOT:
+       
+    ⚜ *GITHUB:* https://bit.ly/b-lico
+    ⚜ *AUTHOR:* Jhonata Tenório
+    
+    ♻️ COMANDOS GERAIS:
+
+    ⚠️ *!help ou !h* -> Informações do bot.
+    ⚠️ *!all ou !a* -> Marca todos do grupo.
+    ⚠️ *(!sticker ou !s) na imagem* -> Gera uma figurinha.
+    
+    ♻️ COMANDOS DO COUNTER STRIKE (HLTV):
+    
+    ⚠️ *!live ou !l* -> Partidas ao vivo.
+    ⚠️ *(!team ou !t) <name>* -> Última partida do time.
+      
+🔰 -----[ *POWERED BY JhN* ]----- 🔰`
 }
-
 
 module.exports = Commands;
