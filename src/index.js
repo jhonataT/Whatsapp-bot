@@ -4,6 +4,7 @@ const hltv = require('./commands/hltv');
 const imgSticker = require("./commands/imgSticker");
 
 const PREFIX = '!';
+let numberFile = 0;
 
 venom
 .create()
@@ -51,7 +52,7 @@ const sendSticker = (client, message) => {
   .split(/\s+/);
   if(message.type === 'image'){
     if(CMD_NAME === "sticker" || CMD_NAME === "s")
-      imgSticker(client, message);
+      imgSticker(client, message, ++numberFile);
   }
 };
 
