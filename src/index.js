@@ -2,6 +2,7 @@ const venom = require('venom-bot');
 const all = require('./commands/all');
 const hltv = require('./commands/hltv');
 const imgSticker = require("./commands/imgSticker");
+const gifSticker = require("./commands/gifSticker");
 
 const PREFIX = '!';
 let numberFile = 0;
@@ -13,6 +14,7 @@ venom
 
 const init = (client) => {
   client.onMessage(async (message) => {
+    console.log(message);
     await client.sendSeen(message.from);
     if(message.isMedia === false && message.isGroupMsg === true)
       GroupsMessage(client, message);
@@ -50,9 +52,13 @@ const sendSticker = (client, message) => {
   .trim()
   .substring(PREFIX.length)
   .split(/\s+/);
+  console.log(message.type);  
   if(message.type === 'image'){
     if(CMD_NAME === "sticker" || CMD_NAME === "s")
       imgSticker(client, message, ++numberFile);
   }
+  if(message.type === 'video'){
+    if(CMD_NAME === "sticker" || CMD_NAME === "s")
+      gifSticker.convert(client, message, ++numberFile);
+  }
 };
-
