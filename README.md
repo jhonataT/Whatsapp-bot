@@ -50,7 +50,6 @@ you've just cloned!!
 |       ✅       | Convert image to sticker         |
 |       ✅       | Mention all members              |
 |       ✅       | Send Video or GIF with Caption   |
-|       ❌       | Expel a group member             |
 |       ❌       |   Promote User                  |
 |       ❌       |   Demote User                   |
 |       ❌       |   Kick User                     |
