@@ -6,9 +6,9 @@ class Commands {
 
 function helpList(){
     return `
-🔰 -----[ *MENU BOTLICO* ]----- 🔰
+🔰 -----[ *MENU LICO* ]----- 🔰
 
-    ♻️ INFO BOT:
+    ♻️ INFO LICO, O BOT:
        
     ⚜ *GITHUB:* https://bit.ly/b-lico
     ⚜ *AUTHOR:* Jhonata Tenório
@@ -16,8 +16,14 @@ function helpList(){
     ♻️ COMANDOS GERAIS:
 
     ⚠️ *!help ou !h* -> Informações do bot.
+    ⚠️ *!adm ou !ad* -> Marca todos os admins do grupo.
     ⚠️ *!all ou !a* -> Marca todos do grupo.
     ⚠️ *(!sticker ou !s) na imagem* -> Gera uma figurinha.
+
+    ♻️ COMANDOS ADMINISTRATIVOS:
+
+    ⚠️ *(!promote ou !p) + @member* -> Promover um mebro do grupo.
+    ⚠️ *(!denote ou !d) + @member* -> Rebaixar um mebro do grupo.
     
     ♻️ COMANDOS DO COUNTER STRIKE (HLTV):
     

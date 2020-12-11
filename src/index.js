@@ -1,4 +1,5 @@
 const venom = require('venom-bot');
+const serverStats = require('./server');
 const all = require('./commands/all');
 const Adm = require('./commands/admin');
 const hltv = require('./commands/hltv');
@@ -12,8 +13,11 @@ venom
 .then( (client) => init(client))
 .catch( (err) => console.log(err));
 
+
 const init = (client) => {
+  serverStats(client);
   client.onMessage(async (message) => {
+    // console.log(message);
     await client.sendSeen(message.from);
     if(message.isMedia === false && message.isGroupMsg === true)
       GroupsMessage(client, message);
@@ -32,12 +36,16 @@ const GroupsMessage = async (client, message) => {
   .split(/\s+/);
   
   console.log(CMD_NAME);
-  const adm = new Adm(client, message);
+  const adm = new Adm(client, message, args);
 
   if(CMD_NAME === 'all' || CMD_NAME === 'a')
     all.mention(client, message);
   if(CMD_NAME === 'adm' || CMD_NAME === 'ad')
     adm.mention();
+  if(CMD_NAME === 'promote' || CMD_NAME === 'p')
+    adm.promoteUser();
+  if(CMD_NAME === 'denote' || CMD_NAME === 'd')
+    adm.denoteUser();
   if(CMD_NAME === 'help' || CMD_NAME === 'h')
     all.help(client, message);
   if(CMD_NAME === 'live' && args.length === 0 || CMD_NAME === 'l' && args.length === 0)
