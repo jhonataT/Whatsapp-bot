@@ -49,6 +49,7 @@ you've just cloned!!
 | :-----------:  | :--------------------------------:|
 |       ✅       | Convert image to sticker         |
 |       ✅       | Mention all members              |
+|       ✅       | Mention Admins                   |
 |       ✅       | Send Video or GIF with Caption   |
 |       ❌       |   Promote User                  |
 |       ❌       |   Demote User                   |
