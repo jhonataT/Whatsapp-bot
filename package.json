@@ -4,8 +4,6 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "cloudconvert": "^2.1.6",
-    "file-url": "^3.0.0",
     "hltv": "^2.21.1",
     "venom-bot": "^2.1.0"
   },
