@@ -1,7 +1,7 @@
 const wa = require('@open-wa/wa-automate');
 const all = require('./commands/all');
 const Adm = require('./commands/admin');
-// const hltv = require('./commands/hltv');
+const hltv = require('./commands/hltv');
 const imgSticker = require("./commands/imgSticker");
 
 const PREFIX = '!';
@@ -42,10 +42,10 @@ const GroupsMessage = async (client, message) => {
     adm.denoteUser();
   if(CMD_NAME === 'help' || CMD_NAME === 'h')
     all.help(client, message);
-  // if(CMD_NAME === 'live' && args.length === 0 || CMD_NAME === 'l' && args.length === 0)
-  //   hltv.live(client, message);
-  // if(CMD_NAME === 'team' && args.length != 0 || CMD_NAME === 't' && args.length != 0)
-  //   hltv.liveInfo(client, message, args.toString().replace(/,/gi, " "));
+  if(CMD_NAME === 'live' && args.length === 0 || CMD_NAME === 'l' && args.length === 0)
+    hltv.live(client, message);
+  if(CMD_NAME === 'team' && args.length != 0 || CMD_NAME === 't' && args.length != 0)
+    hltv.liveInfo(client, message, args.toString().replace(/,/gi, " "));
 };
 
 const sendSticker = (client, message) => {
