@@ -78,6 +78,7 @@ ${hightLights}
                     `);
                 }
             }
+            else this.teamStats(client, message, teamName);
         }     
     }
 }
