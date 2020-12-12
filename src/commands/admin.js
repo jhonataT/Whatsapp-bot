@@ -12,109 +12,89 @@ class Adm {
 
     async mention(){ // Mention admins
         const admins = await this.get();
-        let adminList = new Array();
+        console.log(userId);
         let adminText = 'ADMINS:\n';
-        for(let i = 0; i < admins.length; i++){
-            if(admins[i]._serialized != this.message.to){
-                adminList.push(admins[i].user);
-                adminText = adminText.concat(`@${admins[i].user}\n`);
+        admins.forEach( adm => {
+            if(adm != this.message.to){
+                adm = adm.replace('@c.us', '');
+                adminText = adminText.concat(`@${adm}\n`);
             }
-        }
-        await this.client.sendMentioned(
-            this.message.from,
-            `\n${adminText}`,
-            adminList
-        );
+        })
+        await this.client.sendTextWithMentions(this.message.from, adminText);
     }
 
     async promoteUser(){
-        const text = this.args[0];
-        this.args[0] = this.args[0].replace('@', '').concat('@c.us');
-        const chat = await this.client.checkNumberStatus(this.args[0]);  
-
-        if(chat.numberExists){
-            const adms = await this.get();
-            let verifyAdms = [false, false, false];
-            for(let i = 0; i < adms.length; i++){
-
-                if(adms[i]._serialized == this.args[0])
-                    verifyAdms[0] = true;
-                if(adms[i]._serialized == this.message.author)
-                    verifyAdms[1] = true;
-                if(adms[i]._serialized == this.message.to)
-                    verifyAdms[2] = true;
-            }
-            if(!verifyAdms[2]){
-                this.client.sendText(this.message.from, `_*Desculpe, não tenho permissão para isso!*_`);
-                return;
-            }
-
-            if(!verifyAdms[1]){
-                this.client.sendText(this.message.from, '_*Este comando necessita de um cargo que você não têm.*_');
-                return;
-            }
-            if(verifyAdms[0]){
-                this.client.sendMentioned(this.message.from, `_*O ${text} já é adm!*_`, chat.id.user);
-                return;
-            }
-
-            await this.client.promoteParticipant(this.message.from, this.args[0])
-            .then( res => {
-                console.log(res);
-            })
-            .catch( err => {
-                if(err) console.log(err);
-            });
-            console.log(this.args[0]);
-            this.client.sendMentioned(this.message.from, `_*Parabéns, ${text}, você agora é um ADM!*_`, chat.id.user);
+        const admins = await this.get();
+        let userId = this.args[0].replace("@", "").concat("@c.us");
+        let verify = [false, false, false]; // 0 -> clientIsAdm, 1 -> memberFromIsAdm, 2 -> userToPromoteIsAdm
+        
+        const verifyNumber = await this.client.checkNumberStatus(userId);
+        console.log(verifyNumber);
+        if(!verifyNumber.numberExists){
+            this.client.sendText(`_*Este número não existe, tente novamente.*_`);
+            return;
         }
-        else
-            this.client.sendText(`_*Este usuário não existe!*_`);
+
+        admins.forEach( adm => {
+            if(adm === this.message.to)
+                verify[0] = true;
+            if(adm === this.message.author)
+                verify[1] = true;
+            if(adm == userId)
+                verify[2] = true;
+        });
+        console.log(verify);
+        if(!verify[0]){
+            this.client.sendText(this.message.from, `_*Desculpe, não tenho permissão!*_`);
+            return;
+        }
+        if(!verify[1]){
+            this.client.sendText(this.message.from, `_*Desculpe, você não têm permissão para usar este comando!*_`);
+            return;
+        }
+        if(verify[2]){
+            this.client.sendTextWithMentions(this.message.from, `_*${this.args[0]} já é admin!!*_`);
+            return;
+        }
+        await this.client.promoteParticipant(this.message.from, userId);
+        this.client.sendTextWithMentions(this.message.from, `_*Parabéns, ${this.args[0]}, agora você é admin!*_`);
     }
 
     async denoteUser(){
-        const text = this.args[0];
-        this.args[0] = this.args[0].replace('@', '').concat('@c.us');
-        const chat = await this.client.checkNumberStatus(this.args[0]);  
-
-        if(chat.numberExists){
-            const adms = await this.get();
-            let verifyAdms = [false, false, false];
-            
-            for(let i = 0; i < adms.length; i++){
-                if(adms[i]._serialized == this.args[0])
-                    verifyAdms[0] = true;
-                if(adms[i]._serialized == this.message.author)
-                    verifyAdms[1] = true;
-                if(adms[i]._serialized == this.message.to)
-                    verifyAdms[2] = true;    
-            }   
-            if(!verifyAdms[2]){
-                this.client.sendText(this.message.from, `_*Desculpe, não tenho permissão para isso!*_`);
-                return
-            }
-            if(!verifyAdms[1]){ 
-                this.client.sendText(this.message.from, '_*Este comando necessita de um cargo que você não têm.*_');
-                return;
-            }
-            if(!verifyAdms[0]){
-                this.client.sendMentioned(this.message.from, `_*O ${text} não é adm!*_`, chat.id.user);
-                return;
-            }
-            await this.client.demoteParticipant(this.message.from, this.args[0]).then( res => {
-                console.log(res);
-            })
-            .catch( err => {
-                if(err) console.log(err);
-            });
-            await this.client.demoteParticipant(this.message.from, this.message.author);
-            console.log(this.message.author);
-
-            this.client.sendMentioned(this.message.from, `_*${text}, diga adeus à vida de adm!*_`, chat.id.user);
-            console.log(this.args[0]);
+        const admins = await this.get();
+        let userId = this.args[0].replace("@", "").concat("@c.us");
+        let verify = [false, false, false]; // 0 -> clientIsAdm, 1 -> memberFromIsAdm, 2 -> userToPromoteIsAdm
+        
+        const verifyNumber = await this.client.checkNumberStatus(userId);
+        console.log(verifyNumber);
+        if(!verifyNumber.numberExists){
+            this.client.sendText(`_*Este número não existe, tente novamente.*_`);
+            return;
         }
-        else
-            this.client.sendText(`_*Este usuário não existe!*_`);
+
+        admins.forEach( adm => {
+            if(adm === this.message.to)
+                verify[0] = true;
+            if(adm === this.message.author)
+                verify[1] = true;
+            if(adm == userId)
+                verify[2] = true;
+        });
+        console.log(verify);
+        if(!verify[0]){
+            this.client.sendText(this.message.from, `_*Desculpe, não tenho permissão!*_`);
+            return;
+        }
+        if(!verify[1]){
+            this.client.sendText(this.message.from, `_*Desculpe, você não têm permissão para usar este comando!*_`);
+            return;
+        }
+        if(!verify[2]){
+            this.client.sendTextWithMentions(this.message.from, `_*${this.args[0]} não é admin!!*_`);
+            return;
+        }
+        await this.client.demoteParticipant(this.message.from, userId);
+        this.client.sendTextWithMentions(this.message.from, `_*Parabéns, ${this.args[0]}, você perdeu o seu admin! XD*_`);
     }
 }
 

@@ -53,9 +53,7 @@ you've just cloned!!
 |       ❌       |   Promote User                  |
 |       ❌       |   Demote User                   |
 |       ❌       |   Kick User                     |
-|       ❌       |   Add User                      |
 |       ❌       |   Get link group                |
-|       ❌       |   Get Admin list                |
 |       ❌       |   Get owner group               |
 
 

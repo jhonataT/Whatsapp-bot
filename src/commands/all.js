@@ -3,20 +3,15 @@ const commands = require('./help');
 class GetMembers {
     
     static async mention(client, message){
-        const membersInfo = await client.getGroupMembersIds(message.from);
-        let membersInList = new Array();
+        const membersInfo = await client.getGroupMembersId(message.from);
         let membersInText = '@EVERYONE:\n';
-        for(let i = 0; i < membersInfo.length; i++){
-            if(membersInfo[i]._serialized != message.to && membersInfo[i]._serialized != message.author){
-                membersInList.push(membersInfo[i].user);
-                membersInText = membersInText.concat(`@${membersInfo[i].user}\n`); 
+        membersInfo.forEach( user => {
+            if(user != message.to && user != message.author){
+                user = user.replace('@c.us', '');
+                membersInText = membersInText.concat(`@${user}\n`); 
             }
-        }
-        await client.sendMentioned(
-            message.from,
-            `\n${membersInText}`,
-            membersInList
-        );
+        });
+        await client.sendTextWithMentions(message.from, membersInText);
     }
 
     static help(client, message){

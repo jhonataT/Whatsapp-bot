@@ -79,7 +79,6 @@ ${hightLights}
                 }
             }
         }     
-        if(live === false) client.sendText(message.from, 'Desculpe, não encontrei um jogo ao vivo desse time.')
     }
 }
 

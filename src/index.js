@@ -1,4 +1,4 @@
-const venom = require('venom-bot');
+const wa = require('@open-wa/wa-automate');
 const all = require('./commands/all');
 const Adm = require('./commands/admin');
 const hltv = require('./commands/hltv');
@@ -7,10 +7,7 @@ const imgSticker = require("./commands/imgSticker");
 const PREFIX = '!';
 let numberFile = 0;
 
-venom
-.create()
-.then( (client) => init(client))
-.catch( (err) => console.log(err));
+wa.create().then(client => init(client));
 
 const init = (client) => {
   client.onMessage(async (message) => {
