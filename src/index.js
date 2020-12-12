@@ -7,10 +7,7 @@ const imgSticker = require("./commands/imgSticker");
 const PREFIX = '!';
 let numberFile = 0;
 
-wa.create({
-  qrFormat: "webm",
-  viewport: { height: 600, width: 600 }
-}).then(client => init(client));
+wa.create().then(client => init(client));
 
 const init = (client) => {
   client.onMessage(async (message) => {
