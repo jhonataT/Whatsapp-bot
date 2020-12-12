@@ -8,8 +8,8 @@ const PREFIX = '!';
 let numberFile = 0;
 
 wa.create({
-  qrQuality: 0.5,
-  qrFormat: "jpeg"
+  qrFormat: "webm",
+  viewport: { height: 600, width: 600 }
 }).then(client => init(client));
 
 const init = (client) => {
