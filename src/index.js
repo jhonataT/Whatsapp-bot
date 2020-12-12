@@ -7,7 +7,9 @@ const imgSticker = require("./commands/imgSticker");
 const PREFIX = '!';
 let numberFile = 0;
 
-wa.create().then(client => init(client));
+wa.create({
+  qrQuality: 0.5
+}).then(client => init(client));
 
 const init = (client) => {
   client.onMessage(async (message) => {
