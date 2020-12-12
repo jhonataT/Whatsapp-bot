@@ -47,7 +47,7 @@ you've just cloned!!
 
 |   Group Only   |                Feature           |
 | :-----------:  | :--------------------------------:|
-|       ❌       | Convert image to sticker         |
+|       ✅       | Convert image to sticker         |
 |       ✅       | Mention all members              |
 |       ✅       | Mention Admins                   |
 |       ✅       |   Promote User                  |
