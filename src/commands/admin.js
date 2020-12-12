@@ -12,7 +12,6 @@ class Adm {
 
     async mention(){ // Mention admins
         const admins = await this.get();
-        console.log(userId);
         let adminText = 'ADMINS:\n';
         admins.forEach( adm => {
             if(adm != this.message.to){
