@@ -18,6 +18,7 @@ function helpList(){
     ⚠️ *!help ou !h* -> Informações do bot.
     ⚠️ *!adm ou !ad* -> Marca todos os admins do grupo.
     ⚠️ *!all ou !a* -> Marca todos do grupo.
+    ⚠️ *!online ou !on* -> Mostra quem está online no momento.
     ⚠️ *(!sticker ou !s) na imagem* -> Gera uma figurinha.
 
     ♻️ COMANDOS ADMINISTRATIVOS:

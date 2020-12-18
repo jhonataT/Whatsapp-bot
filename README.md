@@ -50,6 +50,7 @@ you've just cloned!!
 |       ✅       | Convert image to sticker         |
 |       ✅       | Mention all members              |
 |       ✅       | Mention Admins                   |
+|       ✅       |    isOnline(users)               |
 |       ✅       |   Promote User                  |
 |       ✅       |   Demote User                   |
 |       ❌       |   Kick User                     |
