@@ -12,7 +12,17 @@ let numberFile = 0, timeRestart = false;
 wa.create({ authTimeout: 120 }).then(client => init(client));
 
 const init = (client) => {
-  join(client);
+  setInterval( () => {
+    console.log('LOOKING FOR A NEW GROUP!')
+    join(client);
+  }, 180000);
+
+  setInterval( async () => {
+    await client.refresh()
+    .then( () => console.log('Atualizando a página!'))
+    .catch( err => console.log('Tentei atualizar a página, mas deu um erro: ', err));
+  }, 600000);
+
   client.onMessage(async (message) => {
     await client.sendSeen(message.from);
     if(message.isMedia === false && message.isGroupMsg === true)
@@ -24,7 +34,6 @@ const init = (client) => {
 
 const GroupsMessage = async (client, message) => {
   if(!message.body.startsWith(PREFIX)) return;
-  console.log(message.from);
   
   const [CMD_NAME, ...args] = message.body
   .toLowerCase()
@@ -66,10 +75,3 @@ const sendSticker = (client, message) => {
       imgSticker(client, message, ++numberFile);
   }
 };
-
-// const commandsGroupLimit = async () => {
-//   const time = setInterval( () => {
-//     const links = await db.dataTable();
-//   }, 5000);
-
-// };
