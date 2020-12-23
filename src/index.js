@@ -1,7 +1,11 @@
 const wa = require('@open-wa/wa-automate');
 const join = require('./modules/joinGroup');
 const all = require('./commands/all');
+<<<<<<< HEAD
 const db = require('./modules/db');
+=======
+const bd= require('./modules/bd');
+>>>>>>> 7c220aa3b6379fa7598385cda04294aae58fc3d0
 const IsOnline = require('./commands/isOnline');
 const Adm = require('./commands/admin');
 const hltv = require('./commands/hltv');
@@ -37,13 +41,18 @@ const GroupsMessage = async (client, message) => {
   .substring(PREFIX.length)
   .split(/\s+/);
 
+<<<<<<< HEAD
   const links = await db.dataTable();
+=======
+  const links = await bd.dataTable();
+>>>>>>> 7c220aa3b6379fa7598385cda04294aae58fc3d0
   links.forEach( data => {
     if(data.groupId === message.from){
       data.cmds = data.cmds.toLowerCase();
       console.log(`${message.sender.pushname}: ${CMD_NAME}`);
       console.table(data);
       const adm = new Adm(client, message, args);
+<<<<<<< HEAD
 
         if(data.cmds.indexOf(CMD_NAME) != -1){
           if(CMD_NAME === 'help'|| CMD_NAME === 'h')
@@ -67,6 +76,30 @@ const GroupsMessage = async (client, message) => {
         }
         else console.log(`${data.groupId} não tem permissão para usar o comando: ${CMD_NAME}`);
       }
+=======
+      
+      if(CMD_NAME === 'help' && data.cmds.indexOf(CMD_NAME) != -1 || CMD_NAME === 'h' && data.cmds.indexOf(CMD_NAME) != -1 )
+        all.help(client, message);
+      if(CMD_NAME === 'all' && data.cmds.indexOf(CMD_NAME) != -1 || CMD_NAME === 'a' && data.cmds.indexOf(CMD_NAME) != -1)
+        all.mention(client, message);
+      if(CMD_NAME === 'online' && data.cmds.indexOf(CMD_NAME) != -1 || CMD_NAME === 'on' && data.cmds.indexOf(CMD_NAME) != -1)
+        IsOnline.on(client, message);
+      if(CMD_NAME === 'adm' && data.cmds.indexOf(CMD_NAME) != -1 || CMD_NAME === 'ad' && data.cmds.indexOf(CMD_NAME) != -1)
+        adm.mention();
+      if(CMD_NAME === 'live' && data.cmds.indexOf(CMD_NAME) != -1 || CMD_NAME === 'l' && data.cmds.indexOf(CMD_NAME) != -1)
+        hltv.live(client, message);
+      if(args.length != 0) {
+        if(CMD_NAME === 'promote' && data.cmds.indexOf(CMD_NAME) != -1 || CMD_NAME === 'p' && data.cmds.indexOf(CMD_NAME) != -1)
+          adm.promoteUser();
+        if(CMD_NAME === 'denote' && data.cmds.indexOf(CMD_NAME) != -1 || CMD_NAME === 'd' && data.cmds.indexOf(CMD_NAME) != -1)
+          adm.denoteUser();
+        if(CMD_NAME === 'team' && data.cmds.indexOf(CMD_NAME) != -1 || CMD_NAME === 't' && data.cmds.indexOf(CMD_NAME) != -1)
+          hltv.liveInfo(client, message, args.toString().replace(/,/gi, " "));
+        else console.log('Grupo não pode usar esse comando!');
+      }
+      else console.log('Grupo não pode usar esse comando!');
+    }
+>>>>>>> 7c220aa3b6379fa7598385cda04294aae58fc3d0
   });
 };
 
