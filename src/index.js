@@ -17,12 +17,6 @@ const init = (client) => {
     join(client);
   }, 180000);
 
-  setInterval( async () => {
-    await client.refresh()
-    .then( () => console.log('Atualizando a página!'))
-    .catch( err => console.log('Tentei atualizar a página, mas deu um erro: ', err));
-  }, 600000);
-
   client.onMessage(async (message) => {
     await client.sendSeen(message.from);
     if(message.isMedia === false && message.isGroupMsg === true)

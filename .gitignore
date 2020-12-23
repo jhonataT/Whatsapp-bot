@@ -1,5 +1,5 @@
 node_modules
 package-lock.json
-session.data.json
+./session.data.json
 logs
 .env
