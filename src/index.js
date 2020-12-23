@@ -1,11 +1,7 @@
 const wa = require('@open-wa/wa-automate');
 const join = require('./modules/joinGroup');
 const all = require('./commands/all');
-<<<<<<< HEAD
 const db = require('./modules/db');
-=======
-const bd= require('./modules/bd');
->>>>>>> 7c220aa3b6379fa7598385cda04294aae58fc3d0
 const IsOnline = require('./commands/isOnline');
 const Adm = require('./commands/admin');
 const hltv = require('./commands/hltv');
