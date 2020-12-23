@@ -1,4 +1,4 @@
-const db = require('./bd.js');
+const db = require('./db.js');
 
 async function getLinks() {
     const links = await db.dataTable();

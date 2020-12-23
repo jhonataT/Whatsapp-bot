@@ -1,7 +1,7 @@
 const wa = require('@open-wa/wa-automate');
 const join = require('./modules/joinGroup');
 const all = require('./commands/all');
-const bd= require('./modules/bd');
+const db = require('./modules/db');
 const IsOnline = require('./commands/isOnline');
 const Adm = require('./commands/admin');
 const hltv = require('./commands/hltv');
@@ -37,35 +37,36 @@ const GroupsMessage = async (client, message) => {
   .substring(PREFIX.length)
   .split(/\s+/);
 
-  const links = await bd.dataTable();
+  const links = await db.dataTable();
   links.forEach( data => {
     if(data.groupId === message.from){
       data.cmds = data.cmds.toLowerCase();
       console.log(`${message.sender.pushname}: ${CMD_NAME}`);
       console.table(data);
       const adm = new Adm(client, message, args);
-      
-      if(CMD_NAME === 'help' && data.cmds.indexOf(CMD_NAME) != -1 || CMD_NAME === 'h' && data.cmds.indexOf(CMD_NAME) != -1 )
-        all.help(client, message);
-      if(CMD_NAME === 'all' && data.cmds.indexOf(CMD_NAME) != -1 || CMD_NAME === 'a' && data.cmds.indexOf(CMD_NAME) != -1)
-        all.mention(client, message);
-      if(CMD_NAME === 'online' && data.cmds.indexOf(CMD_NAME) != -1 || CMD_NAME === 'on' && data.cmds.indexOf(CMD_NAME) != -1)
-        IsOnline.on(client, message);
-      if(CMD_NAME === 'adm' && data.cmds.indexOf(CMD_NAME) != -1 || CMD_NAME === 'ad' && data.cmds.indexOf(CMD_NAME) != -1)
-        adm.mention();
-      if(CMD_NAME === 'live' && data.cmds.indexOf(CMD_NAME) != -1 || CMD_NAME === 'l' && data.cmds.indexOf(CMD_NAME) != -1)
-        hltv.live(client, message);
-      if(args.length != 0) {
-        if(CMD_NAME === 'promote' && data.cmds.indexOf(CMD_NAME) != -1 || CMD_NAME === 'p' && data.cmds.indexOf(CMD_NAME) != -1)
-          adm.promoteUser();
-        if(CMD_NAME === 'denote' && data.cmds.indexOf(CMD_NAME) != -1 || CMD_NAME === 'd' && data.cmds.indexOf(CMD_NAME) != -1)
-          adm.denoteUser();
-        if(CMD_NAME === 'team' && data.cmds.indexOf(CMD_NAME) != -1 || CMD_NAME === 't' && data.cmds.indexOf(CMD_NAME) != -1)
-          hltv.liveInfo(client, message, args.toString().replace(/,/gi, " "));
-        else console.log('Grupo não pode usar esse comando!');
+
+        if(data.cmds.indexOf(CMD_NAME) != -1){
+          if(CMD_NAME === 'help'|| CMD_NAME === 'h')
+            all.help(client, message);
+          if(CMD_NAME === 'all' || CMD_NAME === 'a')
+            all.mention(client, message);
+          if(CMD_NAME === 'online' || CMD_NAME === 'on')
+            IsOnline.on(client, message);
+          if(CMD_NAME === 'adm' || CMD_NAME === 'ad')
+            adm.mention();
+          if(CMD_NAME === 'live' || CMD_NAME === 'l')
+            hltv.live(client, message);
+          if(args.length != 0) {
+            if(CMD_NAME === 'promote' || CMD_NAME === 'p')
+              adm.promoteUser();
+            if(CMD_NAME === 'denote' || CMD_NAME === 'd')
+              adm.denoteUser();
+            if(CMD_NAME === 'team' || CMD_NAME === 't')
+              hltv.liveInfo(client, message, args.toString().replace(/,/gi, " "));
+          }
+        }
+        else console.log(`${data.groupId} não tem permissão para usar o comando: ${CMD_NAME}`);
       }
-      else console.log('Grupo não pode usar esse comando!');
-    }
   });
 };
 
