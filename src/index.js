@@ -13,9 +13,11 @@ let numberFile = 0, timeRestart = false;
 wa.create({ authTimeout: 120 }).then(client => init(client));
 
 const init = async (client) => {
-  setInterval( () => {
+  setInterval( async () => {
     console.log('LOOKING FOR A NEW GROUP!')
-    join(client);
+    await join(client);
+    console.log('All ok!!')
+    await client.sendText(process.env.ADM_NUMBER, 'All ok!');
   }, 180000);
 
   client.onMessage(async (message) => {
@@ -79,6 +81,7 @@ const sendSticker = (client, message) => {
   .split(/\s+/);
   console.log(`${message.sender.pushname}: ${CMD_NAME}`);
   if(message.type === 'image'){
+    console.log(CMD_NAME);
     if(CMD_NAME === "sticker" || CMD_NAME === "s")
       imgSticker(client, message, ++numberFile);
   }

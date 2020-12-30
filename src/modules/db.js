@@ -42,6 +42,16 @@ class Database {
         })
         return links;
     }
+    //////////////////////////////////////
+    // ADD DATAS
+    static async addItem(linkGroup, cmds, groupId){
+        const Grupos = await this.table();
+        await Grupos.create({
+            link: `${linkGroup}`,
+            commands: `${cmds}`,
+            groupId: groupId
+        });
+    }
 }
 
 module.exports = Database;
