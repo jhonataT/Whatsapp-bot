@@ -6,6 +6,7 @@ const IsOnline = require('./commands/isOnline');
 const Adm = require('./commands/admin');
 const hltv = require('./commands/hltv');
 const imgSticker = require("./commands/imgSticker");
+const buttons = require("./commands/sendButtons");
 
 const PREFIX = '!';
 let numberFile = 0, timeRestart = false;
@@ -45,13 +46,13 @@ const GroupsMessage = async (client, message) => {
       adm.mention();
     if(CMD_NAME === 'live' || CMD_NAME === 'l')
       hltv.live(client, message);
+    if(CMD_NAME === 'button' || CMD_NAME === 'b')
+      buttons.send(client, message);
     if(args.length != 0) {
       if(CMD_NAME === 'promote' || CMD_NAME === 'p')
         adm.promoteUser();
       if(CMD_NAME === 'denote' || CMD_NAME === 'd')
         adm.denoteUser();
-      // if(CMD_NAME === 'team' || CMD_NAME === 't')
-      //   hltv.liveInfo(client, message, args.toString().replace(/,/gi, " "));
     }
 };
 

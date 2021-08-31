@@ -3,3 +3,9 @@ node_modules
 package-lock.json
 logs
 .env
+
+# managed
+**.data.json
+**.node-persist**
+# end managed
+session.data.json
