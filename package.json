@@ -1,20 +1,19 @@
 {
-  "name": "Wbot2.0",
-  "version": "2.0.5",
+  "name": "Wbot3.0",
+  "version": "3.0.0",
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "@open-wa/wa-automate": "^4.16.0",
+    "@open-wa/wa-automate": "^4.20.6",
     "axios": "^0.21.1",
     "dotenv": "^8.2.0",
-    "hltv": "^3.3.3",
     "mysql2": "^2.2.5",
     "sequelize": "^6.3.5"
   },
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node src/index.js"
+    "start": "ts-node src/index.ts"
   },
   "keywords": [
     "nodeJs",
