@@ -2,7 +2,7 @@ interface Setup {
     PREFIX: string,
     CMD_NAME: string,
     ARGS: string[],
-}
+};
 
 function setMessageSetup(message: any): Setup {
     const prefix = '!';

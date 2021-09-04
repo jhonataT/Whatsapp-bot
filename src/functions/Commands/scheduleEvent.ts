@@ -1,9 +1,10 @@
 const fs = require('fs');
+const path = require('path');
 const eventDB = require('../../database/Event.json');
 
 interface Button {
     id: string, 
-    title: string
+    text: string
 };
 
 interface Infomation {
@@ -18,18 +19,19 @@ async function newEvent(
     args: string[]
 ): Promise<string> {
 
-    if(eventDB) return `
+    if(eventDB.body !== "*") return `
         ${sender.pushname}, há um evento em andamento.
     `;
 
-    const buttons: Button[] = [
-        {id: '0',  title: 'Marcar presença ("!e sim")'},
-        {id: '1',  title: 'Não poderei participar ("!e não")'}
+    const userButtons: Button[] = [
+        {id: '0',  text: '!participar'},
+        {id: '1',  text: '!naoparticipar'},
+        {id: '1',  text: '!naoparticipar'}
     ];
 
     const eventInformation: Infomation = {
-        body: args[0] || '*',
-        title: args[1]|| '*',
+        body: args[1] || '*',
+        title: args[0]|| '*',
         hour: args[2]|| '*'
     };
 
@@ -43,20 +45,20 @@ async function newEvent(
     }
 
     fs.writeFileSync(
-        __dirname + '../' + 'database' + 'Event.json', 
-        JSON.parse(eventInformation.toString()),
+        path.join(__dirname, '../', '../', '/database', 'Event.json'),
+        JSON.stringify(eventInformation, null, 4),
         'utf8'
     )
 
     const isCreatedEvent = await client.sendButtons(
         from, 
         eventInformation.body, 
-        buttons, 
+        userButtons, 
         eventInformation.title, 
         eventInformation.hour
-    ); 
+    );
 
-    return 'a'; 
+    return 'Tudo certo, evento marcado.'; 
 }
 
 const eventValidation = (eventInformation: Infomation): boolean => {
