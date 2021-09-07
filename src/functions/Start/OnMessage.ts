@@ -1,6 +1,6 @@
-const msgSetup = require('./messageSetup');
-const GroupMessage = require('../Groups/GroupMessage');
-const sendSticker = require('../Commands/imageSticker');
+const msgSetup = require('./messageSetup.ts');
+const GroupMessage = require('../Groups/GroupMessage.ts');
+const sendSticker = require('../Commands/imageSticker.ts');
 
 async function OnMessage(client: any, msg: any) {
   await client.sendSeen(msg.from);

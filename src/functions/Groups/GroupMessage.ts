@@ -1,4 +1,6 @@
-const scheduleEvent = require('../Commands/scheduleEvent');
+const scheduleEvent = require('../Commands/event/scheduleEvent.ts');
+const rmEvent = require('../Commands/event/removeEvent.ts');
+const showEvt = require('../Commands/event/showEvent.ts');
 
 async function groupMsg(client: any, message: any, CMD_NAME: string, ARGS: string[]) {
     console.log('GROUPMESSAGE:');
@@ -12,11 +14,17 @@ async function groupMsg(client: any, message: any, CMD_NAME: string, ARGS: strin
     );
     
     console.log(newArgs);
+    let response = '';
 
     if(CMD_NAME === 'event'|| CMD_NAME === 'e'){
-        const response = await scheduleEvent(client, message, newArgs);
-        await client.sendText(message.from, response);
-    }
+        response = await scheduleEvent(client, message, newArgs);
+    } else if(CMD_NAME === 'rmevent'|| CMD_NAME === 're'){
+        response = await rmEvent(message);
+    } else if(CMD_NAME === 'showevent'|| CMD_NAME === 'se'){
+        response = await showEvt(message, client);
+    } 
+
+    await client.sendText(message.from, response);
 }
 
 module.exports = groupMsg;

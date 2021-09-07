@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const eventDB = require('../../database/Event.json');
+const eventDB = require('../../../database/Event.json');
 
 interface Button {
     id: string, 
@@ -26,13 +26,12 @@ async function newEvent(
     const userButtons: Button[] = [
         {id: '0',  text: '!participar'},
         {id: '1',  text: '!naoparticipar'},
-        {id: '1',  text: '!naoparticipar'}
     ];
 
     const eventInformation: Infomation = {
         body: args[1] || '*',
-        title: args[0]|| '*',
-        hour: args[2]|| '*'
+        title: args[0] || '*',
+        hour: args[2] || '*'
     };
 
     const isValidEvent = await eventValidation(eventInformation);
@@ -45,7 +44,7 @@ async function newEvent(
     }
 
     fs.writeFileSync(
-        path.join(__dirname, '../', '../', '/database', 'Event.json'),
+        path.join(__dirname, '../', '../', '../', '/database', 'Event.json'),
         JSON.stringify(eventInformation, null, 4),
         'utf8'
     )
