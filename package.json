@@ -8,9 +8,9 @@
     "axios": "^0.21.1",
     "dotenv": "^8.2.0",
     "mysql2": "^2.2.5",
-    "sequelize": "^6.3.5"
+    "sequelize": "^6.6.5",
+    "sqlite3": "^5.0.2"
   },
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "ts-node src/index.ts"
