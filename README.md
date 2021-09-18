@@ -48,18 +48,5 @@ you've just cloned!!
 |   Group Only   |                Feature           |
 | :-----------:  | :--------------------------------:|
 |       ✅       | Convert image to sticker         |
-|       ✅       | Mention all members              |
-|       ✅       | Mention Admins                   |
-|       ✅       |    isOnline(users)               |
-|       ✅       |   Promote User                  |
-|       ✅       |   Demote User                   |
-|       ❌       |   Kick User                     |
-|       ❌       |   Get link group                |
-|       ❌       |   Get owner group               |
+|       ✅       | Create event              |
 
-
-| CS:GO(HLTV)  |                     Feature                     |
-| :------------: | :---------------------------------------------: |
-|       ✅        |   Get live matches              |
-|       ✅        |   Matche stats                  |
-|      And        |   Others...                      |
