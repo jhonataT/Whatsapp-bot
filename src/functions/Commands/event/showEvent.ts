@@ -1,6 +1,6 @@
 const infoDB = require('../../../database/Event.json');
 
-async function showEvent(
+export async function showEvent(
     { sender, from }: any,
     client: any 
 ): Promise<string> {
@@ -9,7 +9,7 @@ async function showEvent(
         ${sender.pushname}, não há um evento em andamento.
     `;
 
-    const userButtons: Button[] = [
+    const userButtons: object[] = [
         {id: '0',  text: '!participar'},
         {id: '1',  text: '!naoparticipar'},
     ];
@@ -24,5 +24,3 @@ async function showEvent(
 
     return ``;
 }
-
-module.exports = showEvent;

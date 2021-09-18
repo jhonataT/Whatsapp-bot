@@ -1,18 +1,16 @@
-const msgSetup = require('./messageSetup.ts');
-const GroupMessage = require('../Groups/GroupMessage.ts');
-const sendSticker = require('../Commands/imageSticker.ts');
+import { setMessageSetup } from "./messageSetup";
+import { groupMsg } from "../Groups/GroupMessage";
+import { imageAsSticker } from "../Commands/imageSticker";
 
-async function OnMessage(client: any, msg: any) {
+export async function OnMessage(client: any, msg: any) {
   await client.sendSeen(msg.from);
-  const { PREFIX, CMD_NAME, ARGS } = msgSetup(msg);
+  const { PREFIX, CMD_NAME, ARGS } = setMessageSetup(msg);
   
   if(!msg.body) msg.body = 'nothing here!'; // if message.body is null
-  if(!msg.body.startsWith(PREFIX)) return;
-
+  if(!msg.body.startsWith(PREFIX) && !msg.caption.startsWith(PREFIX)) return;
+  
   if(msg.isMedia === false && msg.isGroupMsg === true)
-    GroupMessage(client, msg, CMD_NAME, ARGS);
+    groupMsg(client, msg, CMD_NAME, ARGS);
   else if(msg.isMedia === true)
-    sendSticker(client, msg, CMD_NAME);
+    imageAsSticker(client, msg, CMD_NAME);
 }
-
-module.exports = OnMessage;

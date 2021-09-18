@@ -1,6 +1,4 @@
-async function imageAsSticker(client: any, message: any, CMD_NAME: string) {
-    if(!message.caption) message.caption = 'message'; 
-
+export async function imageAsSticker(client: any, message: any, CMD_NAME: string) {
     if(message.type === 'image'){
         if(CMD_NAME === "sticker" || CMD_NAME === "s"){
             message.body  = await client.decryptMedia(message);
@@ -9,5 +7,3 @@ async function imageAsSticker(client: any, message: any, CMD_NAME: string) {
         }
     }
 }
-
-module.exports = imageAsSticker;

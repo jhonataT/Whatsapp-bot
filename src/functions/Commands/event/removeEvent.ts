@@ -2,7 +2,7 @@ const eventDataBase = require('../../../database/Event.json');
 const fileSystem = require('fs');
 const pth = require('path');
 
-async function removeEvent(
+export async function removeEvent(
     { sender }: any, 
 ): Promise<string> {
     console.log(eventDataBase.body);
@@ -11,7 +11,7 @@ async function removeEvent(
         ${sender.pushname}, não há um evento em andamento.
     `;
 
-    const eventInformation: Infomation = {
+    const eventInformation: any = {
         body: '*',
         title: '*',
         hour: '*'
@@ -25,5 +25,3 @@ async function removeEvent(
 
     return 'Tudo certo, evento removido.'; 
 }
-
-module.exports = removeEvent;

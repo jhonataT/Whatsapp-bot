@@ -4,8 +4,12 @@ interface Setup {
     ARGS: string[],
 };
 
-function setMessageSetup(message: any): Setup {
+export function setMessageSetup(message: any): Setup {
     const prefix = '!';
+    
+    if(message.type === 'image'){
+        message.body = message.caption;
+    }
 
     const [cmd, ...args] = message.body
     .toLowerCase()
@@ -19,5 +23,3 @@ function setMessageSetup(message: any): Setup {
         ARGS: args
     };
 }
-
-module.exports = setMessageSetup;

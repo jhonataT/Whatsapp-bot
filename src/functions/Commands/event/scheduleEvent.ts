@@ -1,27 +1,15 @@
-const fs = require('fs');
-const path = require('path');
-const eventDB = require('../../../database/Event.json');
+import { Button, Infomation } from '../../../interfaces';
+import { EventTable, sqlz } from '../../../database/controllers';
 
-interface Button {
-    id: string, 
-    text: string
-};
-
-interface Infomation {
-    body: string,
-    title: string, 
-    hour: string
-}
-
-async function newEvent(
+export async function newEvent(
     client: any, 
     { from, sender }: any, 
     args: string[]
 ): Promise<string> {
 
-    if(eventDB.body !== "*") return `
-        ${sender.pushname}, há um evento em andamento.
-    `;
+    // if(eventDB.body !== "*") return `
+    //     ${sender.pushname}, há um evento em andamento.
+    // `;
 
     const userButtons: Button[] = [
         {id: '0',  text: '!participar'},
@@ -29,8 +17,8 @@ async function newEvent(
     ];
 
     const eventInformation: Infomation = {
-        body: args[1] || '*',
         title: args[0] || '*',
+        body: args[1] || '*',
         hour: args[2] || '*'
     };
 
@@ -38,24 +26,26 @@ async function newEvent(
 
     if(!isValidEvent) {
         return `
-            O evento não pode ser marcado, pois
-            não segue o formato desejado.
+        O evento não pode ser marcado, pois
+        não segue o formato desejado.
         `;
     }
 
-    fs.writeFileSync(
-        path.join(__dirname, '../', '../', '../', '/database', 'Event.json'),
-        JSON.stringify(eventInformation, null, 4),
-        'utf8'
-    )
+    // const db = await sqlz.sync();
 
-    const isCreatedEvent = await client.sendButtons(
-        from, 
-        eventInformation.body, 
-        userButtons, 
-        eventInformation.title, 
-        eventInformation.hour
-    );
+    const eventExists = await EventTable.findAll();
+    console.log(eventExists.length);
+
+    // const createResult = await EventTable.create(eventInformation);
+    // console.log(createResult);
+
+    // const isCreatedEvent = await client.sendButtons(
+    //     from, 
+    //     eventInformation.body, 
+    //     userButtons, 
+    //     eventInformation.title, 
+    //     eventInformation.hour
+    // );
 
     return 'Tudo certo, evento marcado.'; 
 }
@@ -69,5 +59,3 @@ const eventValidation = (eventInformation: Infomation): boolean => {
     
     return isValid;
 }
-
-module.exports = newEvent;

@@ -10,3 +10,5 @@ logs
 # end managed
 session.data.json
 BOT_LICO.data.json
+
+src/database/db.sqlite

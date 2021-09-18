@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "@open-wa/wa-automate": "^4.20.6",
+    "@open-wa/wa-automate": "^4.21.1",
     "axios": "^0.21.1",
     "dotenv": "^8.2.0",
     "mysql2": "^2.2.5",

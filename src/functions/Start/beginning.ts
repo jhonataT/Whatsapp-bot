@@ -1,8 +1,5 @@
-const OnMsg = require('./OnMessage.ts');
+import { OnMessage } from "./OnMessage";
 
-function beginningSection(client: any): void{
-    client.onMessage((message: any) => OnMsg(client, message));
-
+export function beginningSection(client: any): void{
+    client.onMessage((message: any) => OnMessage(client, message));
 }
-
-module.exports = beginningSection;
