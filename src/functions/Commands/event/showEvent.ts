@@ -1,25 +1,28 @@
-const infoDB = require('../../../database/Event.json');
+import { Button } from "../../../interfaces";
+import { EventTable } from "../../../database/controllers";
 
 export async function showEvent(
     { sender, from }: any,
     client: any 
 ): Promise<string> {
 
-    if(infoDB.body === "*") return `
+    const eventExists = await EventTable.findAll();
+    
+    if(eventExists.length === 0) return `
         ${sender.pushname}, não há um evento em andamento.
     `;
-
-    const userButtons: object[] = [
+    
+    const userButtons: Button[] = [
         {id: '0',  text: '!participar'},
         {id: '1',  text: '!naoparticipar'},
     ];
 
     const isCreatedEvent = await client.sendButtons(
         from, 
-        infoDB.body, 
+        eventExists[0].dataValues?.body, 
         userButtons, 
-        infoDB.title, 
-        infoDB.hour
+        eventExists[0].dataValues?.title, 
+        eventExists[0].dataValues?.hour
     );
 
     return ``;

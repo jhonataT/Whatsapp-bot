@@ -19,7 +19,7 @@ export async function groupMsg(client: any, message: any, CMD_NAME: string, ARGS
     if(CMD_NAME === 'event'|| CMD_NAME === 'e'){
         response = await newEvent(client, message, newArgs);
     } else if(CMD_NAME === 'rmevent'|| CMD_NAME === 're'){
-        // response = await removeEvent(message);
+        response = await removeEvent(message);
     } else if(CMD_NAME === 'showevent'|| CMD_NAME === 'se'){
         response = await showEvent(message, client);
     } 

@@ -5,11 +5,12 @@ export async function newEvent(
     client: any, 
     { from, sender }: any, 
     args: string[]
-): Promise<string> {
-
-    // if(eventDB.body !== "*") return `
-    //     ${sender.pushname}, há um evento em andamento.
-    // `;
+    ): Promise<string> {
+    let eventExists = await EventTable.findAll();
+        
+    if(eventExists.length > 0) return `
+        ${sender.pushname}, há um evento em andamento.
+    `;
 
     const userButtons: Button[] = [
         {id: '0',  text: '!participar'},
@@ -31,23 +32,22 @@ export async function newEvent(
         `;
     }
 
-    // const db = await sqlz.sync();
+    const createResult = await EventTable.create(eventInformation);
 
-    const eventExists = await EventTable.findAll();
-    console.log(eventExists.length);
+    eventExists = await EventTable.findAll();
+    if(eventExists.length === 1){
+        const isCreatedEvent = await client.sendButtons(
+            from, 
+            eventInformation.body, 
+            userButtons, 
+            eventInformation.title, 
+            eventInformation.hour
+        );
+        return 'Tudo certo, evento marcado.'; 
+    } else {
+        return 'Oopss, não consegui marcar este evento.'; 
+    }
 
-    // const createResult = await EventTable.create(eventInformation);
-    // console.log(createResult);
-
-    // const isCreatedEvent = await client.sendButtons(
-    //     from, 
-    //     eventInformation.body, 
-    //     userButtons, 
-    //     eventInformation.title, 
-    //     eventInformation.hour
-    // );
-
-    return 'Tudo certo, evento marcado.'; 
 }
 
 const eventValidation = (eventInformation: Infomation): boolean => {

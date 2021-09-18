@@ -1,27 +1,16 @@
-const eventDataBase = require('../../../database/Event.json');
-const fileSystem = require('fs');
-const pth = require('path');
+import { Infomation } from "../../../interfaces";
+import { EventTable } from "../../../database/controllers";
 
 export async function removeEvent(
     { sender }: any, 
 ): Promise<string> {
-    console.log(eventDataBase.body);
+    const eventExists = await EventTable.findAll();
 
-    if(eventDataBase.body === "*") return `
+    if(eventExists.length === 0) return `
         ${sender.pushname}, não há um evento em andamento.
     `;
 
-    const eventInformation: any = {
-        body: '*',
-        title: '*',
-        hour: '*'
-    };
-
-    fileSystem.writeFileSync(
-        pth.join(__dirname, '../', '../', '../', './database', 'Event.json'),
-        JSON.stringify(eventInformation, null, 4),
-        'utf8'
-    )
+    await EventTable.destroy({where: {id: eventExists[0].dataValues?.id}});
 
     return 'Tudo certo, evento removido.'; 
 }
