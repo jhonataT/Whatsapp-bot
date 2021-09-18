@@ -21,5 +21,6 @@ export const User = sqlz.define("user", {
 export const EventTable = sqlz.define("event", {
     body: DataTypes.TEXT,
     title: DataTypes.INTEGER,
-    hour: DataTypes.TEXT
+    hour: DataTypes.TEXT,
+    userAdmin: DataTypes.TEXT
 }); 
