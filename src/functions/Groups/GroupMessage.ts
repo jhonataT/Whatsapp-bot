@@ -1,6 +1,7 @@
 import { newEvent } from "../Commands/event/scheduleEvent";
 import { removeEvent } from "../Commands/event/removeEvent";
 import { showEvent } from "../Commands/event/showEvent";
+import { acceptEvent } from "../Commands/user/accept";
 
 export async function groupMsg(client: any, message: any, CMD_NAME: string, ARGS: string[]) {
     console.log('GROUPMESSAGE:');
@@ -18,11 +19,13 @@ export async function groupMsg(client: any, message: any, CMD_NAME: string, ARGS
 
     if(CMD_NAME === 'event'|| CMD_NAME === 'e'){
         response = await newEvent(client, message, newArgs);
-    } else if(CMD_NAME === 'rmevent'|| CMD_NAME === 're'){
+    } else if(CMD_NAME === 'rmevent' || CMD_NAME === 're'){
         response = await removeEvent(message);
-    } else if(CMD_NAME === 'showevent'|| CMD_NAME === 'se'){
+    } else if(CMD_NAME === 'showevent' || CMD_NAME === 'se'){
         response = await showEvent(message, client);
-    } 
+    } else if(CMD_NAME === 'participar' || CMD_NAME === 'p'){
+        response = await acceptEvent(message);
+    }
 
     await client.sendText(message.from, response);
 }
