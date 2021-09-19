@@ -9,3 +9,9 @@ export interface Infomation {
     hour: string,
     userAdmin: string
 }
+
+export interface UserInformation {
+    name: string,
+    status: number,
+    number: string
+}

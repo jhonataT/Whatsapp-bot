@@ -7,7 +7,9 @@ export async function OnMessage(client: any, msg: any) {
   const { PREFIX, CMD_NAME, ARGS } = setMessageSetup(msg);
   
   if(!msg.body) msg.body = 'nothing here!'; // if message.body is null
-  if(!msg.body.startsWith(PREFIX) && !msg.caption.startsWith(PREFIX)) return;
+  if(CMD_NAME === ''){
+    return;
+  }
   
   if(msg.isMedia === false && msg.isGroupMsg === true)
     groupMsg(client, msg, CMD_NAME, ARGS);
