@@ -20,7 +20,8 @@ export async function newEvent(
     const eventInformation: Infomation = {
         title: args[0] || '*',
         body: args[1] || '*',
-        hour: args[2] || '*'
+        hour: args[2] || '*',
+        userAdmin: from
     };
 
     const isValidEvent = await eventValidation(eventInformation);

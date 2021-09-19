@@ -6,5 +6,6 @@ export interface Button {
 export interface Infomation {
     body: string,
     title: string, 
-    hour: string
+    hour: string,
+    userAdmin: string
 }
