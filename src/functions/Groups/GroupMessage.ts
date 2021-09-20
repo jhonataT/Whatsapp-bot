@@ -2,6 +2,7 @@ import { newEvent } from "../Commands/event/scheduleEvent";
 import { removeEvent } from "../Commands/event/removeEvent";
 import { showEvent } from "../Commands/event/showEvent";
 import { acceptEvent } from "../Commands/user/accept";
+import { declineEvent } from "../Commands/user/decline";
 
 export async function groupMsg(client: any, message: any, CMD_NAME: string, ARGS: string[]) {
     console.log('GROUPMESSAGE:');
@@ -25,6 +26,8 @@ export async function groupMsg(client: any, message: any, CMD_NAME: string, ARGS
         response = await showEvent(message, client);
     } else if(CMD_NAME === 'participar' || CMD_NAME === 'p'){
         response = await acceptEvent(message);
+    } else if(CMD_NAME === 'naoparticipar' || CMD_NAME === 'np'){
+        response = await declineEvent(message);
     }
 
     await client.sendText(message.from, response);

@@ -1,5 +1,6 @@
 import { Button, Infomation } from '../../../interfaces';
 import { EventTable, sqlz } from '../../../database/controllers';
+import { acceptEvent } from '../user/accept';
 
 export async function newEvent(
     client: any, 
@@ -44,7 +45,7 @@ export async function newEvent(
             eventInformation.title, 
             eventInformation.hour
         );
-        return 'Tudo certo, evento marcado.'; 
+        return await acceptEvent({sender, from}); 
     } else {
         return 'Oopss, não consegui marcar este evento.'; 
     }

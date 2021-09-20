@@ -11,7 +11,7 @@ export function setMessageSetup(message: any): Setup {
         message.body = message.caption;
     }
 
-    if(!message.body.startsWith(prefix)) return {
+    if(!message.body || !message.body.startsWith(prefix)) return {
         PREFIX: prefix, 
         CMD_NAME: '', 
         ARGS: ['']

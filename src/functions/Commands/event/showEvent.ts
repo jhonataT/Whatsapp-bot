@@ -1,5 +1,6 @@
 import { Button } from "../../../interfaces";
 import { EventTable } from "../../../database/controllers";
+import { getAllUsers } from "../user/getAll";
 
 export async function showEvent(
     { sender, from }: any,
@@ -17,9 +18,11 @@ export async function showEvent(
         {id: '1',  text: '!naoparticipar'},
     ];
 
+    const users = await getAllUsers(); 
+
     const isCreatedEvent = await client.sendButtons(
         from, 
-        eventExists[0].dataValues?.body, 
+        eventExists[0].dataValues?.body + `\n\n${users}`, 
         userButtons, 
         eventExists[0].dataValues?.title, 
         eventExists[0].dataValues?.hour

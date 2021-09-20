@@ -1,8 +1,9 @@
 import { Infomation } from "../../../interfaces";
 import { EventTable } from "../../../database/controllers";
+import { removeUsers } from "../user/decline";
 
 export async function removeEvent(
-    { sender, from }: any, 
+    { sender, author }: any, 
 ): Promise<string> {
     const eventExists = await EventTable.findAll();
 
@@ -10,11 +11,12 @@ export async function removeEvent(
         ${sender.pushname}, não há um evento em andamento.
     `;
 
-    if(eventExists[0].dataValues?.userAdmin !== from) return `
+    if(eventExists[0].dataValues?.userAdmin !== author) return `
         ${sender.pushname}, você não pode remover este evento.
     `;
 
     await EventTable.destroy({where: {id: eventExists[0].dataValues?.id}});
+    await removeUsers();
 
     return 'Tudo certo, evento removido.'; 
 }
