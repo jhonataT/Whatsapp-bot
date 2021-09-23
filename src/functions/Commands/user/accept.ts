@@ -4,7 +4,6 @@ import { UserInformation } from "../../../interfaces";
 export async function acceptEvent(msg: any): Promise<string> {
     const eventExists = await EventTable.findAll();
     const userExists = await User.findAll();
-    console.log(msg);
 
     if(eventExists.length === 0) return `
         ${msg.sender.pushname}, não há um evento em andamento.
@@ -26,8 +25,6 @@ export async function acceptEvent(msg: any): Promise<string> {
             break;
         }
     }
-    console.log(isUserExist);
-    console.table(userInformation);
 
     if(!isUserExist){
         const createResult = await User.create(userInformation);

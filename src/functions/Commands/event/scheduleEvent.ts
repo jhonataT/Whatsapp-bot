@@ -4,13 +4,13 @@ import { acceptEvent } from '../user/accept';
 
 export async function newEvent(
     client: any, 
-    { from, sender }: any, 
+    message: any, 
     args: string[]
     ): Promise<string> {
     let eventExists = await EventTable.findAll();
         
     if(eventExists.length > 0) return `
-        ${sender.pushname}, há um evento em andamento.
+        ${message.sender.pushname}, há um evento em andamento.
     `;
 
     const userButtons: Button[] = [
@@ -22,7 +22,7 @@ export async function newEvent(
         title: args[0] || '*',
         body: args[1] || '*',
         hour: args[2] || '*',
-        userAdmin: from
+        userAdmin: message.sender.id
     };
 
     const isValidEvent = await eventValidation(eventInformation);
@@ -39,13 +39,13 @@ export async function newEvent(
     eventExists = await EventTable.findAll();
     if(eventExists.length === 1){
         const isCreatedEvent = await client.sendButtons(
-            from, 
+            message.from, 
             eventInformation.body, 
             userButtons, 
             eventInformation.title, 
             eventInformation.hour
         );
-        return await acceptEvent({sender, from}); 
+        return await acceptEvent(message); 
     } else {
         return 'Oopss, não consegui marcar este evento.'; 
     }
