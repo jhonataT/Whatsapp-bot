@@ -3,7 +3,7 @@ import { groupMsg } from "../Groups/GroupMessage";
 import { imageAsSticker } from "../Commands/imageSticker";
 
 export async function OnMessage(client: any, msg: any) {
-  await client.sendSeen(msg.from);
+  // await client.sendSeen(msg.from);
   const { PREFIX, CMD_NAME, ARGS } = setMessageSetup(msg);
   
   console.log(CMD_NAME);

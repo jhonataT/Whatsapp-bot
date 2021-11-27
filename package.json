@@ -9,7 +9,8 @@
     "dotenv": "^8.2.0",
     "mysql2": "^2.2.5",
     "sequelize": "^6.6.5",
-    "sqlite3": "^5.0.2"
+    "sqlite3": "^5.0.2",
+    "ts-node": "^10.3.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
