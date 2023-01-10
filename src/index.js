@@ -21,11 +21,6 @@ socketIO.on('connection', (socket) => {
   });
 });
 
-app.get('/start', (req, res) => {
-  console.log("A START")
-  res.end(JSON.stringify({status: 'ok'}));
-})
-
 http.listen(3000, () => {
   console.log("Listening on port 3000");
 })

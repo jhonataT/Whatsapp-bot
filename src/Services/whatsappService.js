@@ -15,34 +15,47 @@ class Whatsapp {
         },
         statusFind: (statusSession, session) => {
           let statusLabel = 'Carregando, aguarde...';
+          let isResetConnection = false;
 
           switch(statusSession) {
-            case "notLogged" || "browserClose" || "autocloseCalled":
+            case "notLogged": 
+              statusLabel = 'Carregando conexão...';
+              isResetConnection = false;
+              break;
+            case "browserClose" || "autocloseCalled" || "qrReadFail" || "serverClose":
               statusLabel = 'Falha ao logar, tente outra conexão.';
+              isResetConnection = true;
               break;
             case "deleteToken" || "deviceNotConnected" || "serverWssNotConnected":
               statusLabel = 'Falha ao logar, tente outra conexão.';
+              isResetConnection = true;
               break;
             case "qrReadSuccess":
               statusLabel = 'QR Code reconhecido, carregando chats...';
+              isResetConnection = false;
               break;
             case "qrReadFail":
-              statusLabel = 'Falha ao carregar QR Code. Tente novamente.';
+              statusLabel = 'Tente ler o QR Code';
+              isResetConnection = false;
               break;
             case "desconnectedMobile":
               statusLabel = 'Aparelho desconectado. Tente novamente.';
+              isResetConnection = false;
               break;
             case "chatsAvailable":
               statusLabel = 'Carregando chats...';
+              isResetConnection = false;
               break;
             case "initBrowser": 
               statusLabel = 'Iniciando conexão...';
+              isResetConnection = false;
               break;
             default: 
               statusLabel = 'Carregando...'
+              isResetConnection = false;
           }
 
-          socket.emit('status-response', {statusSession, session, statusLabel})
+          socket.emit('status-response', {statusSession, session, statusLabel, isResetConnection})
           //return isLogged || notLogged || browserClose || qrReadSuccess || qrReadFail || autocloseCalled || desconnectedMobile || deleteToken || chatsAvailable || deviceNotConnected || serverWssNotConnected || noOpenBrowser || initBrowser || openBrowser || connectBrowserWs || initWhatsapp || erroPageWhatsapp || successPageWhatsapp || waitForLogin || waitChat || successChat
           //Create session wss return "serverClose" case server for close
         }
